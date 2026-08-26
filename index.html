@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tajweedul Quran Academy | SalahTrack & Courses</title>
+
+    <!-- WhatsApp / Facebook / Open Graph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🕌 SalahTrack | The Best Daily Prayer Tracker">
+    <meta property="og:description" content="Sadaqatul Jariya (صدقة جارية) - Encourage your family & children to keep track of daily Salah. Share maximum with all!">
+    <meta property="og:image" content="https://i.postimg.cc/x15Gk0gY/Chat-GPT-Image-Aug-26-2026-04-45-26-PM.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🕌 SalahTrack | The Best Daily Prayer Tracker">
+    <meta name="twitter:description" content="Sadaqatul Jariya (صدقة جارية) - Encourage your family & children to keep track of daily Salah. Share maximum with all!">
+    <meta name="twitter:image" content="https://i.postimg.cc/x15Gk0gY/Chat-GPT-Image-Aug-26-2026-04-45-26-PM.png">
+
+    <!-- Tailwind CSS & Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
     <style>
         body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; color: #003366; overflow-x: hidden; }
         
@@ -25,7 +42,6 @@
         }
         
         .arabic-calligraphy { font-family: 'Amiri', serif; }
-        
         .logo-img { height: 45px; width: auto; object-fit: contain; }
 
         /* Smooth Moving Announcement Banner */
@@ -57,7 +73,7 @@
             100% { transform: translate(-100%, 0); }
         }
 
-        /* 2. SalahTrack Soft Blended Background */
+        /* SalahTrack Soft Blended Background */
         .salahtrack-section {
             position: relative;
             background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), 
@@ -96,13 +112,22 @@
                 <a href="#about" class="text-deep-blue hover:text-sky-blue transition">About</a>
             </div>
 
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-3">
+                <template x-if="currentUser">
+                    <div class="flex items-center space-x-2 border-r pr-3 border-slate-200">
+                        <span class="text-xs font-bold text-deep-blue">👤 <span x-text="currentUser.name"></span></span>
+                        <button @click="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded font-bold hover:bg-red-200">Logout</button>
+                    </div>
+                </template>
+                <template x-if="!currentUser">
+                    <button @click="showAuthModal = true" class="bg-sky-blue text-deep-blue px-4 py-2 rounded-full text-xs font-bold hover:bg-deep-blue hover:text-white transition shadow-sm">Sign In / Register</button>
+                </template>
                 <a href="https://wa.me/c/97339903645" class="bg-deep-blue text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-sky-blue hover:text-deep-blue transition shadow-md">WhatsApp Catalog</a>
             </div>
         </nav>
     </header>
 
-    <!-- 1. Hero Section (Illustration Removed) -->
+    <!-- 1. Hero Section -->
     <section id="home" class="relative bg-deep-blue py-24 px-4 overflow-hidden border-b border-white/5">
         <div class="absolute right-0 top-0 opacity-5 pointer-events-none">
             <svg width="600" height="600" viewBox="0 0 100 100"><path d="M50 0L60 40L100 50L60 60L50 100L40 60L0 50L40 40Z" fill="#A0D8EF"/></svg>
@@ -110,8 +135,8 @@
 
         <div class="container mx-auto text-center relative z-10">
             <span class="text-sky-blue font-bold uppercase tracking-widest text-xs">Empowering the Next Generation</span>
-            <h1 class="text-4xl md:text-7xl font-bold text-white mt-4 mb-6 leading-tight">Quran & Islamic Excellence <br>for Ladies & Kids</h1>
-            <p class="text-slate-200 max-w-2xl mx-auto mb-10 text-lg md:text-xl leading-relaxed">Master Tajweed from the comfort of your home with specialized female tutors. Structured learning for a beautiful and authentic recitation.</p>
+            <h1 class="text-4xl md:text-7xl font-bold text-white mt-4 mb-6 leading-tight">Quran & Academic Excellence <br>for Ladies & Kids</h1>
+            <p class="text-slate-200 max-w-2xl mx-auto mb-10 text-lg md:text-xl leading-relaxed">Master Tajweed & Academic Subjects with dedicated female tutors. 1-on-1 personalized sessions and flexible scheduling.</p>
             
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#courses" class="bg-sky-blue text-deep-blue px-10 py-4 rounded-xl font-bold shadow-xl hover:bg-white transition-all transform hover:-translate-y-1">View Course Catalog</a>
@@ -120,10 +145,10 @@
         </div>
     </section>
 
-    <!-- 2. SalahTrack Main Dashboard (Blended Background) -->
+    <!-- 2. SalahTrack Main Dashboard -->
     <section id="salahtrack" class="salahtrack-section py-24">
         <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center mb-16">
+            <div class="text-center mb-6">
                 <h2 class="arabic-calligraphy text-7xl md:text-9xl font-bold text-blue-gradient mb-0 leading-none drop-shadow-sm">تَتَبُّعُ الصَّلَاةِ</h2>
                 <div class="flex items-center justify-center space-x-4 -mt-4 md:-mt-8">
                     <div class="h-0.5 bg-sky-blue flex-grow max-w-[120px]"></div>
@@ -133,8 +158,21 @@
                 <p class="text-deep-blue/60 mt-4 font-bold tracking-[0.2em] text-xs md:text-sm uppercase">Your Personal Spiritual Journey Tracker</p>
             </div>
 
-            <!-- Weekly Challenge Banner -->
-            <div class="mb-10 bg-white/80 backdrop-blur-md border-l-4 border-deep-blue p-6 rounded-r-2xl shadow-lg max-w-4xl mx-auto">
+            <!-- Global Country Student Stats Banner -->
+            <div class="max-w-4xl mx-auto mb-10 bg-white/95 backdrop-blur-md border border-sky-blue/40 p-4 rounded-2xl shadow-md">
+                <p class="text-center font-bold text-xs text-deep-blue uppercase tracking-wider mb-3">🌍 Active Students Enrolled Across Countries</p>
+                <div class="flex flex-wrap justify-center items-center gap-3">
+                    <template x-for="(count, country) in countryStats" :key="country">
+                        <div class="bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl flex items-center space-x-2 shadow-sm">
+                            <span class="text-sm font-bold text-deep-blue" x-text="country"></span>
+                            <span class="bg-deep-blue text-white text-xs px-2.5 py-0.5 rounded-full font-black" x-text="count + ' Students'"></span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Weekly Challenge Banner & WhatsApp Weekly Report Trigger -->
+            <div class="mb-10 bg-white/80 backdrop-blur-md border-l-4 border-deep-blue p-6 rounded-r-2xl shadow-lg max-w-4xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div class="flex items-start">
                     <div class="flex-shrink-0 text-2xl">🏆</div>
                     <div class="ml-4">
@@ -142,6 +180,9 @@
                         <p class="text-slate-700 text-sm leading-relaxed"><strong>Rankings are based on timely tracking!</strong> Students who record their Salah earliest and most consistently on time will be ranked higher on the weekly leaderboard.</p>
                     </div>
                 </div>
+                <button @click="sendWhatsAppReport()" class="flex-shrink-0 bg-green-600 text-white px-5 py-3 rounded-xl font-bold text-xs hover:bg-green-700 transition flex items-center space-x-2 shadow-md">
+                    <span>📱 Send Weekly Progress Report to WhatsApp</span>
+                </button>
             </div>
 
             <!-- Family/Student Tabs -->
@@ -149,10 +190,11 @@
                 <template x-for="(student, index) in students" :key="index">
                     <button @click="activeStudentIndex = index" :class="activeStudentIndex === index ? 'bg-deep-blue text-white shadow-lg' : 'bg-white/80 text-deep-blue border border-deep-blue/20'" class="px-6 py-2.5 rounded-full font-bold transition whitespace-nowrap flex items-center space-x-2">
                         <span x-text="student.name"></span>
+                        <template x-if="student.country"><span class="text-[10px] opacity-75" x-text="'(' + student.country + ')'"></span></template>
                         <template x-if="activeStudentIndex === index"><span class="text-[10px] bg-sky-blue px-2 py-0.5 rounded-full text-deep-blue">Active</span></template>
                     </button>
                 </template>
-                <button @click="addStudent()" class="px-6 py-2.5 rounded-full border-2 border-dashed border-deep-blue/30 text-deep-blue font-bold hover:bg-white/50 transition">+ Add Member</button>
+                <button @click="openAddStudentModal()" class="px-6 py-2.5 rounded-full border-2 border-dashed border-deep-blue/30 text-deep-blue font-bold hover:bg-white/50 transition">+ Add Student / Member</button>
             </div>
 
             <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -184,7 +226,7 @@
                         <h4 class="text-6xl font-black text-white mb-6" x-text="getActiveStudent().points"></h4>
                         <div class="grid grid-cols-2 gap-4 border-t border-white/10 pt-6">
                             <div><p class="text-sky-blue text-[10px] font-bold uppercase">Streak</p><p class="text-2xl font-bold text-white"><span x-text="getActiveStudent().streak"></span> Days 🔥</p></div>
-                            <div><p class="text-sky-blue text-[10px] font-bold uppercase">Target</p><p class="text-2xl font-bold text-white">Top 10 🏆</p></div>
+                            <div><p class="text-sky-blue text-[10px] font-bold uppercase">Status</p><p class="text-lg font-bold text-white" x-text="getActiveStudent().points >= 30 ? 'Top Performer 🏆' : 'Needs Progress 📈'"></p></div>
                         </div>
                     </div>
 
@@ -215,6 +257,7 @@
                 <p class="text-slate-500 mb-8 font-medium">Explore our specialized curriculum for Ladies & Kids</p>
                 <div class="flex flex-wrap justify-center gap-3">
                     <button @click="filter = 'all'" :class="filter === 'all' ? 'bg-deep-blue text-white shadow-lg' : 'bg-slate-100 text-slate-600'" class="px-8 py-3 rounded-full text-sm font-bold transition">All Courses</button>
+                    <button @click="filter = 'academic'" :class="filter === 'academic' ? 'bg-deep-blue text-white shadow-lg' : 'bg-slate-100 text-slate-600'" class="px-8 py-3 rounded-full text-sm font-bold transition">Academic Tuition</button>
                     <button @click="filter = 'quran'" :class="filter === 'quran' ? 'bg-deep-blue text-white shadow-lg' : 'bg-slate-100 text-slate-600'" class="px-8 py-3 rounded-full text-sm font-bold transition">Quran & Tajweed</button>
                     <button @click="filter = 'free'" :class="filter === 'free' ? 'bg-deep-blue text-white shadow-lg' : 'bg-slate-100 text-slate-600'" class="px-8 py-3 rounded-full text-sm font-bold transition">Free Programs</button>
                     <button @click="filter = 'studies'" :class="filter === 'studies' ? 'bg-deep-blue text-white shadow-lg' : 'bg-slate-100 text-slate-600'" class="px-8 py-3 rounded-full text-sm font-bold transition">Islamic Studies</button>
@@ -236,6 +279,46 @@
             </div>
         </div>
     </section>
+
+    <!-- User Sign In / Registration Modal -->
+    <div x-show="showAuthModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" x-cloak>
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative">
+            <button @click="showAuthModal = false" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+            <h3 class="text-2xl font-black text-deep-blue mb-2">Student Sign In</h3>
+            <p class="text-xs text-slate-500 mb-6">Enter details to sign in and record student location.</p>
+
+            <form @submit.prevent="handleAuthSubmit()">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-deep-blue uppercase mb-1">Student Name</label>
+                        <input type="text" x-model="authForm.name" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-deep-blue text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-deep-blue uppercase mb-1">Email Address</label>
+                        <input type="email" x-model="authForm.email" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-deep-blue text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-deep-blue uppercase mb-1">WhatsApp Number (With Country Code)</label>
+                        <input type="tel" x-model="authForm.whatsapp" placeholder="+974 / +91 ..." required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-deep-blue text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-deep-blue uppercase mb-1">Country / Location</label>
+                        <select x-model="authForm.country" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-deep-blue text-sm bg-white">
+                            <option value="Qatar">Qatar 🇶🇦</option>
+                            <option value="India (Kerala)">India (Kerala) 🇮🇳</option>
+                            <option value="UAE">UAE 🇦🇪</option>
+                            <option value="Saudi Arabia">Saudi Arabia 🇸🇦</option>
+                            <option value="Oman">Oman 🇴🇲</option>
+                            <option value="Kuwait">Kuwait 🇰🇼</option>
+                            <option value="Bahrain">Bahrain 🇧🇭</option>
+                            <option value="Other">Other Global</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="w-full mt-6 bg-deep-blue text-white py-3.5 rounded-xl font-bold text-sm hover:bg-sky-blue hover:text-deep-blue transition shadow-lg">Complete Sign In</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer id="about" class="bg-deep-blue text-white pt-20 pb-10">
@@ -278,40 +361,91 @@
             return {
                 activeStudentIndex: 0,
                 filter: 'all',
+                showAuthModal: false,
+                currentUser: null,
+                authForm: { name: '', email: '', whatsapp: '', country: 'Qatar' },
+                countryStats: { 'Qatar 🇶🇦': 12, 'India (Kerala) 🇮🇳': 28, 'UAE 🇦🇪': 8, 'Saudi Arabia 🇸🇦': 5 },
                 statuses: [
                     { id: 'on_time', label: 'On Time', points: 10 },
                     { id: 'late', label: 'Late', points: 5 },
                     { id: 'missed', label: 'Missed', points: 0 }
                 ],
-                sunnahs: [
-                    { name: 'Fajr Sunnah', rakahs: '2 Rak\'ahs' },
-                    { name: 'Dhuhr Sunnah', rakahs: '4+2 Rak\'ahs' },
-                    { name: 'Maghrib Sunnah', rakahs: '2 Rak\'ahs' },
-                    { name: 'Isha Sunnah', rakahs: '2 Rak\'ahs' }
-                ],
                 courses: [
-                    { id: 1, category: 'free', categoryName: 'Free Programs', title: 'Free Islamic Webinars', desc: 'Monthly live webinars covering spiritual growth and Quranic insights open to all.', icon: '🌐' },
-                    { id: 2, category: 'free', categoryName: 'Free Programs', title: 'Self-Paced Learning', desc: 'Access starter modules and downloadable PDF guides to begin your journey independently.', icon: '📂' },
-                    { id: 3, category: 'quran', categoryName: 'Quran & Tajweed', title: 'Noorani Qaida', desc: 'Foundation course covering letter recognition and basic Arabic joining for kids and beginners.', icon: '📖' },
-                    { id: 4, category: 'quran', categoryName: 'Tajweed for Ladies', desc: 'Advanced female-only classes studying Ghunnah, Ikhfa, and Madd rules.', icon: '🕌' },
-                    { id: 5, category: 'quran', categoryName: 'Hifdh Program', desc: 'Structured memorization plans for both Ladies & Kids with certified female Huffaz.', icon: '⭐' },
-                    { id: 6, category: 'studies', categoryName: 'Islamic Studies', title: 'Hadith & Etiquette', desc: 'Learning authentic Hadiths, daily Sunnah manners, and practical Islamic morals.', icon: '📜' }
+                    { id: 1, category: 'academic', categoryName: 'Academic Tuition', title: 'All Curriculum Academic Tuition', desc: 'Comprehensive 1-on-1 tuition for CBSE, IGCSE, State, and International curricula. Personalized attention with flexible class timings tailored for every student.', icon: '🎓' },
+                    { id: 2, category: 'free', categoryName: 'Free Programs', title: 'Free Islamic Webinars', desc: 'Monthly live webinars covering spiritual growth and Quranic insights open to all.', icon: '🌐' },
+                    { id: 3, category: 'free', categoryName: 'Free Programs', title: 'Self-Paced Learning', desc: 'Access starter modules and downloadable PDF guides to begin your journey independently.', icon: '📂' },
+                    { id: 4, category: 'quran', categoryName: 'Quran & Tajweed', title: 'Noorani Qaida', desc: 'Foundation course covering letter recognition and basic Arabic joining for kids and beginners.', icon: '📖' },
+                    { id: 5, category: 'quran', categoryName: 'Tajweed for Ladies', desc: 'Advanced female-only classes studying Ghunnah, Ikhfa, and Madd rules.', icon: '🕌' },
+                    { id: 6, category: 'quran', categoryName: 'Hifdh Program', desc: 'Structured memorization plans for both Ladies & Kids with certified female Huffaz.', icon: '⭐' },
+                    { id: 7, category: 'studies', categoryName: 'Islamic Studies', title: 'Hadith & Etiquette', desc: 'Learning authentic Hadiths, daily Sunnah manners, and practical Islamic morals.', icon: '📜' }
                 ],
                 students: [],
                 init() {
                     const saved = localStorage.getItem('tajweedAcademyData');
-                    if (saved) { this.students = JSON.parse(saved); } 
-                    else { this.students = [{ name: 'Student 1', points: 0, streak: 0, lastDate: new Date().toDateString(), tracking: {} }]; this.save(); }
+                    const savedUser = localStorage.getItem('tajweedAcademyUser');
+                    
+                    if (savedUser) { this.currentUser = JSON.parse(savedUser); }
+                    
+                    if (saved) { 
+                        this.students = JSON.parse(saved); 
+                    } else { 
+                        this.students = [
+                            { name: 'Student 1', points: 40, streak: 5, whatsapp: '', country: 'Qatar', lastDate: new Date().toDateString(), tracking: {} },
+                            { name: 'Student 2', points: 15, streak: 2, whatsapp: '', country: 'India (Kerala)', lastDate: new Date().toDateString(), tracking: {} }
+                        ]; 
+                        this.save(); 
+                    }
+                    this.updateCountryStats();
                 },
-                getActiveStudent() { return this.students[this.activeStudentIndex]; },
-                addStudent() {
-                    const name = prompt("Enter Student Name:");
-                    if (name) { this.students.push({ name: name, points: 0, streak: 0, lastDate: new Date().toDateString(), tracking: {} }); this.save(); }
+                getActiveStudent() { 
+                    return this.students[this.activeStudentIndex] || { name: 'Student', points: 0, streak: 0, tracking: {} }; 
+                },
+                openAddStudentModal() {
+                    this.authForm = { name: '', email: '', whatsapp: '', country: 'Qatar' };
+                    this.showAuthModal = true;
+                },
+                handleAuthSubmit() {
+                    const newStudent = {
+                        name: this.authForm.name,
+                        email: this.authForm.email,
+                        whatsapp: this.authForm.whatsapp,
+                        country: this.authForm.country,
+                        points: 0,
+                        streak: 0,
+                        lastDate: new Date().toDateString(),
+                        tracking: {}
+                    };
+                    
+                    this.students.push(newStudent);
+                    this.activeStudentIndex = this.students.length - 1;
+                    this.currentUser = { name: this.authForm.name, email: this.authForm.email };
+                    
+                    localStorage.setItem('tajweedAcademyUser', JSON.stringify(this.currentUser));
+                    this.save();
+                    this.updateCountryStats();
+                    this.showAuthModal = false;
+
+                    const subject = encodeURIComponent("Signed In to Tajweedul Quran Academy - SalahTrack");
+                    const body = encodeURIComponent(`Assalamu Alaikum ${this.authForm.name},\n\nYou have successfully signed in to Tajweedul Quran Academy SalahTrack.\nCountry: ${this.authForm.country}\nRegistered WhatsApp: ${this.authForm.whatsapp}\n\nKeep tracking your daily Salah!`);
+                    window.open(`mailto:${this.authForm.email}?subject=${subject}&body=${body}`, '_blank');
+                },
+                updateCountryStats() {
+                    const counts = { 'Qatar 🇶🇦': 12, 'India (Kerala) 🇮🇳': 28, 'UAE 🇦🇪': 8, 'Saudi Arabia 🇸🇦': 5 };
+                    this.students.forEach(s => {
+                        if (s.country) {
+                            const key = s.country.includes('Qatar') ? 'Qatar 🇶🇦' : 
+                                        s.country.includes('India') ? 'India (Kerala) 🇮🇳' : 
+                                        s.country.includes('UAE') ? 'UAE 🇦🇪' : 
+                                        s.country.includes('Saudi') ? 'Saudi Arabia 🇸🇦' : s.country;
+                            counts[key] = (counts[key] || 0) + 1;
+                        }
+                    });
+                    this.countryStats = counts;
                 },
                 updateStatus(prayer, statusId) {
                     const student = this.getActiveStudent();
                     const date = new Date().toDateString();
-                    if (!student.tracking[date]) student.tracking[date] = { sunnah: [] };
+                    if (!student.tracking[date]) student.tracking[date] = {};
                     student.tracking[date][prayer] = statusId;
                     const status = this.statuses.find(s => s.id === statusId);
                     student.points += status.points;
@@ -328,6 +462,41 @@
                         return 'bg-red-500 text-white border-red-500';
                     }
                     return 'bg-white text-slate-500 border-slate-200 hover:border-deep-blue';
+                },
+                sendWhatsAppReport() {
+                    const student = this.getActiveStudent();
+                    const phone = student.whatsapp ? student.whatsapp.replace(/[^0-9]/g, '') : '';
+                    
+                    const academyWhatsAppNumber = "97339903645";
+                    const academyLink = `https://wa.me/${academyWhatsAppNumber}`;
+
+                    let message = "";
+                    if (student.points >= 30) {
+                        message = `Assalamu Alaikum ${student.name}! 🌟\n\n`
+                                + `Congratulations! You are performing wonderfully in Tajweedul Quran Academy's SalahTrack!\n\n`
+                                + `🏆 Total Points: ${student.points}\n`
+                                + `🔥 Daily Streak: ${student.streak} Days\n`
+                                + `Status: Top Performer! Keep up the great effort! ✨\n\n`
+                                + `----------------------------------\n`
+                                + `💬 Have questions or want to give feedback? Reach out to us here:\n`
+                                + `${academyLink}`;
+                    } else {
+                        message = `Assalamu Alaikum ${student.name}.\n\n`
+                                + `This is a gentle reminder from Tajweedul Quran Academy for your SalahTrack progress.\n\n`
+                                + `📊 Total Points: ${student.points}\n`
+                                + `🔥 Current Streak: ${student.streak} Days\n\n`
+                                + `You are currently falling behind in tracking your daily prayers. Please update your SalahTrack today and stay consistent! 🕌\n\n`
+                                + `----------------------------------\n`
+                                + `💬 Need help or want to give feedback to Academy? Contact us directly:\n`
+                                + `${academyLink}`;
+                    }
+
+                    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+                    window.open(url, '_blank');
+                },
+                logout() {
+                    this.currentUser = null;
+                    localStorage.removeItem('tajweedAcademyUser');
                 },
                 filteredCourses() {
                     if (this.filter === 'all') return this.courses;
