@@ -1,368 +1,530 @@
 <!DOCTYPE html>
-<html lang="ml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tajweed Quran Academy - Salah Tracker & Courses</title>
-    <!-- Open Graph Metadata -->
-    <meta property="og:title" content="Tajweed Quran Academy">
-    <meta property="og:description" content="Online Quran & Academic Tuition Portal">
-    <meta property="og:image" content="https://i.postimg.cc/x15Gk0gY/poster-image.jpg">
+    <title>SalahTrack (തَتَبُّعُ الصَّلَاةِ) | Tajweed Ul Qur'an Academy</title>
+    
+    <!-- Metadata for GitHub Pages -->
+    <meta property="og:title" content="SalahTrack - Tajweed Ul Qur'an Academy">
+    <meta property="og:description" content="Daily Salah Tracker for Students">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-color: #0d5c3a;
-            --accent-color: #d4af37;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #333333;
+            --primary-green: #064e3b;
+            --deep-green: #04362a;
+            --gold: #c5a059;
+            --light-gold: #f3e8d2;
+            --white: #ffffff;
+            --bg-pattern: #f4f1ea;
+            --text-dark: #1f2937;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* Moving Text Banner */
-        .marquee-banner {
-            background-color: var(--accent-color);
-            color: #000;
-            font-weight: bold;
-            padding: 10px 0;
-            font-size: 16px;
-            overflow: hidden;
-            white-space: nowrap;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-pattern);
+            background-image: url("https://www.transparenttextures.com/patterns/islamic-art.png");
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
         }
 
-        .marquee-content {
-            display: inline-block;
-            padding-left: 100%;
-            animation: marquee 18s linear infinite;
+        /* --- Sign-In Overlay --- */
+        #auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(6, 78, 59, 0.98), rgba(4, 54, 42, 0.98));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
         }
 
-        @keyframes marquee {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
-        }
-
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px;
+        .login-box {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-top: 6px solid var(--gold);
+        }
+
+        .login-box h2 {
+            font-family: 'Amiri', serif;
+            color: var(--primary-green);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary-green);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #fafafa;
+            font-family: inherit;
+        }
+
+        .btn-start {
+            background: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-start:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        /* --- Main App Layout --- */
+        header {
+            background: var(--primary-green);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .academy-name {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .app-subtitle {
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
         }
 
         .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 0 15px;
+            max-width: 900px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
         }
 
-        /* Banner Image */
-        .banner-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            margin-bottom: 25px;
-        }
-
-        /* Live Country Counter Section */
-        .stats-card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-
-        .country-chips {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .chip {
-            background: #e8f5e9;
-            border: 1px solid #c8e6c9;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        /* User Dashboard / Timezone */
-        .timezone-box {
-            background: #fff8e1;
-            border-left: 5px solid var(--accent-color);
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            border-radius: 5px;
-        }
-
-        .time-alert {
-            color: #c62828;
-            font-weight: bold;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0.5; }
-        }
-
-        /* Course Section */
-        .courses-grid {
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-top: 20px;
+            margin-bottom: 30px;
         }
 
-        .course-card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--primary-color);
+        .card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--light-gold);
         }
 
-        /* Modal / Sign-In Overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+        #live-clock {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            font-family: monospace;
+        }
+
+        /* --- Salah Tracker List --- */
+        .salah-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .salah-item {
+            display: flex;
             align-items: center;
-            z-index: 1000;
+            justify-content: space-between;
+            padding: 20px;
+            background: var(--white);
+            border-radius: 15px;
+            border-left: 6px solid #ddd;
+            transition: 0.3s;
         }
 
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .salah-item.completed {
+            border-left-color: var(--success);
+            background: #f0fdf4;
         }
 
-        .form-group {
-            margin-bottom: 15px;
+        .salah-info h4 {
+            font-size: 1.3rem;
+            color: var(--primary-green);
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+        .salah-time {
+            font-size: 0.85rem;
+            color: #666;
         }
 
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .btn-submit {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-submit:hover {
-            background: #094228;
-        }
-
-        /* WhatsApp Support Link */
-        .whatsapp-btn {
+        .status-badge {
             display: inline-block;
-            background: #25d366;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-weight: bold;
-            margin-top: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .badge-on-time { background: #d1fae5; color: #065f46; }
+        .badge-late { background: #fee2e2; color: #991b1b; }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            accent-color: var(--primary-green);
+        }
+
+        .save-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-save {
+            background: var(--gold);
+            color: var(--deep-green);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(197, 160, 89, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn-save:active { transform: scale(0.95); }
+
+        .hidden { display: none !important; }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .academy-name { font-size: 1.8rem; }
+            .salah-item { padding: 15px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SIGN IN MODAL -->
-    <div id="signInModal" class="modal-overlay">
-        <div class="modal-content">
-            <h2 style="text-align: center; color: var(--primary-color);">Tajweed Quran Academy</h2>
-            <p style="text-align: center; font-size: 14px; color: #666;">തുടരുന്നതിനായി നിങ്ങളുടെ വിവരങ്ങൾ നൽകി സൈൻ ഇൻ ചെയ്യുക</p>
+    <!-- AUTHENTICATION OVERLAY -->
+    <div id="auth-overlay">
+        <div class="login-box">
+            <h2>അഹ്‌ലൻ വസഹ്‌ലൻ</h2>
+            <p style="margin-bottom: 20px; color: #666;">Enter your details to track your Salah progress.</p>
             
-            <form id="loginForm" onsubmit="handleSignIn(event)">
-                <div class="form-group">
-                    <label>പേര് (Name):</label>
-                    <input type="text" id="userName" required placeholder="Name">
-                </div>
-                <div class="form-group">
-                    <label>ഇമെയിൽ (Email):</label>
-                    <input type="email" id="userEmail" required placeholder="Email Address">
-                </div>
-                <div class="form-group">
-                    <label>പ്രായം (Age):</label>
-                    <input type="number" id="userAge" required placeholder="Age">
-                </div>
-                <div class="form-group">
-                    <label>രാജ്യം (Country):</label>
-                    <select id="userCountry" required>
-                        <option value="Qatar">Qatar (ഖത്തർ)</option>
-                        <option value="India">India (ഇന്ത്യ)</option>
-                        <option value="USA">USA (അമേരിക്ക)</option>
-                        <option value="UK">UK (ലണ്ടൻ / യുകെ)</option>
-                        <option value="Other">Other Country</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>വാട്സാപ്പ് നമ്പർ (WhatsApp No):</label>
-                    <input type="tel" id="userPhone" required placeholder="+974 / +91 ...">
-                </div>
-                <button type="submit" class="btn-submit">Sign In & Access Website</button>
-            </form>
+            <div class="input-group">
+                <label>STUDENT NAME</label>
+                <input type="text" id="user-name" placeholder="e.g. Ayesha Syed" autocomplete="name">
+            </div>
+
+            <div class="input-group">
+                <label>SELECT COUNTRY / TIMEZONE</label>
+                <select id="user-country">
+                    <option value="">Choose Country...</option>
+                    <option value="Qatar">Qatar (ഖത്തർ)</option>
+                    <option value="Saudi Arabia">Saudi Arabia (സൗദി അറേബ്യ)</option>
+                    <option value="United Arab Emirates">UAE (യു.എ.ഇ)</option>
+                    <option value="India">India (ഇന്ത്യ)</option>
+                    <option value="United Kingdom">UK (ബ്രിട്ടൻ)</option>
+                    <option value="USA">USA (അമേരിക്ക)</option>
+                </select>
+            </div>
+
+            <button class="btn-start" onclick="handleLogin()">Access SalahTrack</button>
         </div>
     </div>
 
-    <!-- MOVING TEXT BANNER -->
-    <div class="marquee-banner">
-        <div class="marquee-content">
-            ✨ Online & Offline Classes Available All Over the World ✨
-        </div>
-    </div>
+    <!-- MAIN APP CONTENT -->
+    <div id="app-container" class="hidden">
+        <header>
+            <div class="academy-name">Tajweed Ul Qur'an Academy</div>
+            <div class="app-subtitle">SalahTrack (തَتَبُّعُ الصَّلَاةِ)</div>
+        </header>
 
-    <!-- MAIN WEBSITE CONTENT -->
-    <header>
-        <h1>തജ്‌വീദ് ഖുർആൻ അക്കാദമി</h1>
-        <p>Online Quran Learning & Academic Tuition Portal</p>
-    </header>
+        <div class="container">
+            <div class="dashboard-grid">
+                <!-- Profile Details -->
+                <div class="card">
+                    <div style="font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px;">ACTIVE STUDENT</div>
+                    <h3 id="display-name" style="font-size: 1.4rem;">Student Name</h3>
+                    <p id="display-location" style="color: #666; font-size: 0.9rem;">📍 Location</p>
+                    <button onclick="logout()" style="margin-top: 10px; background: none; border: none; color: var(--danger); cursor: pointer; font-size: 0.8rem; text-decoration: underline;">Switch Profile</button>
+                </div>
 
-    <div class="container">
-        
-        <!-- Poster Image -->
-        <div class="banner-container">
-            <img src="https://i.postimg.cc/x15Gk0gY/poster-image.jpg" alt="Tajweed Academy Poster">
-        </div>
+                <!-- Live Clock -->
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px;">LOCAL TIME</div>
+                    <div id="live-clock">00:00:00</div>
+                    <div id="display-date" style="font-size: 0.9rem; color: #666;">Date</div>
+                </div>
+            </div>
 
-        <!-- User Dynamic Timezone Clock Box -->
-        <div class="timezone-box" id="timezoneDisplay" style="display:none;">
-            <h3>Welcome, <span id="welcomeName">User</span>!</h3>
-            <p><strong>നിങ്ങളുടെ ടൈം സോൺ (Current Timezone):</strong> <span id="countryTime">Loading time...</span></p>
-            <p class="time-alert">⚠️ ളുഹർ / അസർ നമസ്കാര സമയം അടുത്തിരിക്കുന്നു! (Prayer Time Alert)</p>
-        </div>
+            <!-- Salah Checklist -->
+            <h3 style="margin-bottom: 15px; font-family: 'Amiri', serif; color: var(--primary-green); font-size: 1.8rem;">Daily Checklist</h3>
+            <div id="salah-list" class="salah-container">
+                <!-- Generated dynamically via JS -->
+            </div>
 
-        <!-- Salah Tracker Country Counter -->
-        <div class="stats-card">
-            <h2>صَلاَة TRACKER - Student Joining Stats</h2>
-            <p>രാജ്യങ്ങൾ അടിസ്ഥാനമാക്കിയുള്ള വിദ്യാർത്ഥികളുടെ കൗണ്ടർ:</p>
-            <div class="country-chips">
-                <div class="chip">🇶🇦 Qatar: <span id="cnt-Qatar">1</span></div>
-                <div class="chip">🇮🇳 India: <span id="cnt-India">1</span></div>
-                <div class="chip">🇺🇸 USA: <span id="cnt-USA">1</span></div>
-                <div class="chip">🇬🇧 UK (London): <span id="cnt-UK">1</span></div>
+            <div class="save-section">
+                <button class="btn-save" onclick="saveToLocalStorage()">💾 Save Daily Progress</button>
+                <p id="save-status" style="margin-top: 10px; font-size: 0.8rem; color: var(--success); opacity: 0; transition: opacity 0.3s;">Progress saved to logs!</p>
             </div>
         </div>
 
-        <!-- Academic & Quran Courses -->
-        <h2>Our Courses / കോഴ്‌സുകൾ</h2>
-        <div class="courses-grid">
-            <div class="course-card">
-                <h3>📖 Tajweed Quran Classes</h3>
-                <p>ഖുർആൻ ശരിയായ തജ്‌വീദോടും ഉച്ചാരണത്തോടും കൂടെ ലളിതമായി പഠിക്കാം.</p>
-            </div>
-            <div class="course-card">
-                <h3>📚 Academic Tuition</h3>
-                <p>CBSE & State സ്കൂൾ കുട്ടികൾക്കായുള്ള പ്രത്യേകം അക്കാദമിക് ട്യൂഷൻ ക്ലാസുകൾ.</p>
-            </div>
-        </div>
-
-        <!-- Weekly Tracking & WhatsApp Support -->
-        <div class="stats-card" style="margin-top: 30px;">
-            <h3>വീക്കിലി പെർഫോമൻസ് & ഫോളോ-അപ്പ്</h3>
-            <p>നിങ്ങളുടെ ആഴ്ചയിലെ ക്ലാസ് പെർഫോമൻസും കൃത്യമായ ഫോളോ-അപ്പുകളും വാട്സാപ്പിൽ ലഭിക്കുന്നതാണ്.</p>
-            <a href="https://wa.me/?text=Hello%20Tajweed%20Quran%20Academy,%20I%20have%20a%20query" target="_blank" class="whatsapp-btn">
-                Contact Tajweed Academy WhatsApp
-            </a>
-        </div>
-
+        <footer>
+            &copy; 2024 Tajweed Ul Qur'an Academy. <br>
+            "Keep up your prayers, for prayer keeps you away from indecency and evil."
+        </footer>
     </div>
 
     <script>
-        window.onload = function() {
-            const savedUser = localStorage.getItem('tajweedUser');
-            if(savedUser) {
-                document.getElementById('signInModal').style.display = 'none';
-                initUserDashboard(JSON.parse(savedUser));
-            }
+        let currentUser = null;
+        let prayerTimes = {};
+        const prayerNames = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+
+        const countryToCity = {
+            "Qatar": "Doha",
+            "Saudi Arabia": "Riyadh",
+            "United Arab Emirates": "Dubai",
+            "India": "Mumbai",
+            "United Kingdom": "London",
+            "USA": "New York"
         };
 
-        function handleSignIn(event) {
-            event.preventDefault();
-            
-            const userData = {
-                name: document.getElementById('userName').value,
-                email: document.getElementById('userEmail').value,
-                age: document.getElementById('userAge').value,
-                country: document.getElementById('userCountry').value,
-                phone: document.getElementById('userPhone').value
-            };
+        window.onload = () => {
+            const saved = localStorage.getItem('salahTrack_User');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                startApp();
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+        };
 
-            localStorage.setItem('tajweedUser', JSON.stringify(userData));
-            document.getElementById('signInModal').style.display = 'none';
+        function handleLogin() {
+            const name = document.getElementById('user-name').value.trim();
+            const country = document.getElementById('user-country').value;
 
-            alert("Signed In Successfully!\n\nWe have logged your email (" + userData.email + "). Confirmation message sent!");
-
-            initUserDashboard(userData);
-        }
-
-        function initUserDashboard(user) {
-            document.getElementById('timezoneDisplay').style.display = 'block';
-            document.getElementById('welcomeName').innerText = user.name;
-
-            let countryElem = document.getElementById('cnt-' + user.country);
-            if(countryElem) {
-                let current = parseInt(countryElem.innerText);
-                countryElem.innerText = current + 1;
+            if (!name || !country) {
+                alert("Please enter both Name and Country.");
+                return;
             }
 
-            updateClock(user.country);
-            setInterval(() => updateClock(user.country), 1000);
+            currentUser = { name, country };
+            localStorage.setItem('salahTrack_User', JSON.stringify(currentUser));
+            startApp();
         }
 
-        function updateClock(country) {
-            let timeZones = {
-                'Qatar': 'Asia/Qatar',
-                'India': 'Asia/Kolkata',
-                'USA': 'America/New_York',
-                'UK': 'Europe/London'
+        function logout() {
+            if(confirm("Are you sure you want to log out? Your today's unsaved progress might be lost.")) {
+                localStorage.removeItem('salahTrack_User');
+                location.reload();
+            }
+        }
+
+        async function startApp() {
+            document.getElementById('auth-overlay').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            
+            document.getElementById('display-name').innerText = currentUser.name;
+            document.getElementById('display-location').innerText = `📍 ${currentUser.country}`;
+
+            updateClock(); // Run once immediately
+            await fetchPrayerTimes();
+            renderSalahList();
+            loadDailyProgress();
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const clock = document.getElementById('live-clock');
+            const dateDisplay = document.getElementById('display-date');
+            if (clock) {
+                clock.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+                dateDisplay.innerText = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            }
+        }
+
+        async function fetchPrayerTimes() {
+            const city = countryToCity[currentUser.country] || "London";
+            try {
+                const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${currentUser.country}&method=2`);
+                if (!response.ok) throw new Error("Network response was not ok");
+                const result = await response.json();
+                prayerTimes = result.data.timings;
+            } catch (err) {
+                console.error("Failed to fetch timings, using fallback", err);
+                prayerTimes = { Fajr: "05:00", Dhuhr: "12:30", Asr: "15:30", Maghrib: "18:20", Isha: "19:45", Sunrise: "06:15" };
+            }
+        }
+
+        function renderSalahList() {
+            const list = document.getElementById('salah-list');
+            list.innerHTML = '';
+
+            prayerNames.forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'salah-item';
+                item.id = `salah-${p}`;
+                item.innerHTML = `
+                    <div class="salah-info">
+                        <h4>${p}</h4>
+                        <div class="salah-time">Adhan: ${prayerTimes[p]}</div>
+                        <span id="badge-${p}" class="status-badge" style="display:none;"></span>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="check-${p}" onchange="toggleSalah('${p}')">
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function toggleSalah(pName) {
+            const checkbox = document.getElementById(`check-${pName}`);
+            const item = document.getElementById(`salah-${pName}`);
+            const badge = document.getElementById(`badge-${pName}`);
+
+            if (checkbox.checked) {
+                item.classList.add('completed');
+                const status = checkTimingStatus(pName);
+                
+                if (status === 'on-time') {
+                    badge.innerText = "✨ Performed On Time";
+                    badge.className = "status-badge badge-on-time";
+                } else {
+                    badge.innerText = "⚠️ Completed (Late)";
+                    badge.className = "status-badge badge-late";
+                }
+                badge.style.display = 'inline-block';
+            } else {
+                item.classList.remove('completed');
+                badge.style.display = 'none';
+            }
+        }
+
+        function checkTimingStatus(pName) {
+            const now = new Date();
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+            const getMinutes = (str) => {
+                const [h, m] = str.split(':');
+                return parseInt(h) * 60 + parseInt(m);
             };
 
-            let tz = timeZones[country] || 'UTC';
-            let now = new Date().toLocaleTimeString('en-US', { timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            document.getElementById('countryTime').innerText = userCountryName(country) + " - " + now;
+            const startTime = getMinutes(prayerTimes[pName]);
+            let endTime;
+
+            if (pName === "Fajr") {
+                endTime = getMinutes(prayerTimes.Sunrise);
+            } else if (pName === "Dhuhr") {
+                endTime = getMinutes(prayerTimes.Asr);
+            } else if (pName === "Asr") {
+                endTime = getMinutes(prayerTimes.Maghrib);
+            } else if (pName === "Maghrib") {
+                endTime = getMinutes(prayerTimes.Isha);
+            } else { // Isha
+                // Isha logic: On time if between Isha Adhan and Midnight OR between Midnight and Fajr of next day
+                const fajrNext = getMinutes(prayerTimes.Fajr);
+                if (currentMinutes >= startTime || currentMinutes < fajrNext) {
+                    return 'on-time';
+                }
+                return 'late';
+            }
+
+            return (currentMinutes >= startTime && currentMinutes <= endTime) ? 'on-time' : 'late';
         }
 
-        function userCountryName(c) {
-            return c === 'Qatar' ? 'Qatar (GMT+3)' : c === 'India' ? 'India (IST)' : c;
+        function saveToLocalStorage() {
+            const progress = {};
+            prayerNames.forEach(p => {
+                const badge = document.getElementById(`badge-${p}`);
+                progress[p] = {
+                    checked: document.getElementById(`check-${p}`).checked,
+                    badgeText: badge.innerText,
+                    badgeClass: badge.className,
+                    display: badge.style.display
+                };
+            });
+
+            const today = new Date().toLocaleDateString();
+            localStorage.setItem('salahTrack_Daily', JSON.stringify({ date: today, data: progress }));
+            
+            const msg = document.getElementById('save-status');
+            msg.style.opacity = '1';
+            setTimeout(() => msg.style.opacity = '0', 2000);
+        }
+
+        function loadDailyProgress() {
+            const saved = localStorage.getItem('salahTrack_Daily');
+            if (!saved) return;
+
+            const parsed = JSON.parse(saved);
+            const today = new Date().toLocaleDateString();
+
+            if (parsed.date === today) {
+                prayerNames.forEach(p => {
+                    const savedData = parsed.data[p];
+                    if (savedData && savedData.checked) {
+                        const cb = document.getElementById(`check-${p}`);
+                        const badge = document.getElementById(`badge-${p}`);
+                        const item = document.getElementById(`salah-${p}`);
+                        
+                        cb.checked = true;
+                        item.classList.add('completed');
+                        badge.innerText = savedData.badgeText;
+                        badge.className = savedData.badgeClass;
+                        badge.style.display = savedData.display;
+                    }
+                });
+            }
         }
     </script>
 </body>
