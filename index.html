@@ -3,527 +3,378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SalahTrack (തَتَبُّعُ الصَّلَاةِ) | Tajweed Ul Qur'an Academy</title>
-    
-    <!-- Metadata for GitHub Pages -->
-    <meta property="og:title" content="SalahTrack - Tajweed Ul Qur'an Academy">
-    <meta property="og:description" content="Daily Salah Tracker for Students">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Tajweedul Quran Academy | SalahTrack & Global Tuition</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins for clean English typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Alpine.js for interactive components -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <style>
-        :root {
-            --primary-green: #064e3b;
-            --deep-green: #04362a;
-            --gold: #c5a059;
-            --light-gold: #f3e8d2;
-            --white: #ffffff;
-            --bg-pattern: #f4f1ea;
-            --text-dark: #1f2937;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
+        body { font-family: 'Poppins', sans-serif; background-color: #ffffff; color: #003366; overflow-x: hidden; }
+        
+        .bg-deep-blue { background-color: #003366; }
+        .text-deep-blue { color: #003366; }
+        .bg-sky-blue { background-color: #A0D8EF; }
+        .text-sky-blue { color: #A0D8EF; }
+        
+        /* Smooth Moving Announcement Banner */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            background: #003366;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-pattern);
-            background-image: url("https://www.transparenttextures.com/patterns/islamic-art.png");
-            color: var(--text-dark);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        /* --- Sign-In Overlay --- */
-        #auth-overlay {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(6, 78, 59, 0.98), rgba(4, 54, 42, 0.98));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-        }
-
-        .login-box {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-top: 6px solid var(--gold);
-        }
-
-        .login-box h2 {
-            font-family: 'Amiri', serif;
-            color: var(--primary-green);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--primary-green);
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: #fafafa;
-            font-family: inherit;
-        }
-
-        .btn-start {
-            background: var(--primary-green);
-            color: var(--white);
-            border: none;
-            padding: 15px;
-            width: 100%;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: background 0.3s, transform 0.2s;
-            margin-top: 10px;
-        }
-
-        .btn-start:hover {
-            background: var(--gold);
-            transform: translateY(-2px);
-        }
-
-        /* --- Main App Layout --- */
-        header {
-            background: var(--primary-green);
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 4px solid var(--gold);
-        }
-
-        .academy-name {
-            font-family: 'Amiri', serif;
-            font-size: 2.5rem;
-            margin-bottom: 5px;
-        }
-
-        .app-subtitle {
-            font-size: 1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: -40px auto 40px;
-            padding: 0 20px;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: var(--white);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--light-gold);
-        }
-
-        #live-clock {
-            font-size: 2.2rem;
-            font-weight: 600;
-            color: var(--primary-green);
-            font-family: monospace;
-        }
-
-        /* --- Salah Tracker List --- */
-        .salah-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .salah-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            background: var(--white);
-            border-radius: 15px;
-            border-left: 6px solid #ddd;
-            transition: 0.3s;
-        }
-
-        .salah-item.completed {
-            border-left-color: var(--success);
-            background: #f0fdf4;
-        }
-
-        .salah-info h4 {
-            font-size: 1.3rem;
-            color: var(--primary-green);
-        }
-
-        .salah-time {
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .status-badge {
+        .marquee-content {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-top: 5px;
+            animation: marquee 25s linear infinite;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
-        .badge-on-time { background: #d1fae5; color: #065f46; }
-        .badge-late { background: #fee2e2; color: #991b1b; }
-
-        .checkbox-wrapper input[type="checkbox"] {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            accent-color: var(--primary-green);
+        /* Subtle Islamic pattern overlay for sections */
+        .salahtrack-section {
+            position: relative;
+            background: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)), 
+                        url('https://www.transparenttextures.com/patterns/islamic-art.png');
+            background-attachment: fixed;
         }
 
-        .save-section {
-            text-align: center;
-            margin-top: 30px;
-        }
+        [x-cloak] { display: none !important; }
 
-        .btn-save {
-            background: var(--gold);
-            color: var(--deep-green);
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(197, 160, 89, 0.4);
-            transition: transform 0.2s;
-        }
-
-        .btn-save:active { transform: scale(0.95); }
-
-        .hidden { display: none !important; }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            font-size: 0.8rem;
-            color: #777;
-        }
-
-        @media (max-width: 600px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .academy-name { font-size: 1.8rem; }
-            .salah-item { padding: 15px; }
-        }
+        /* Modal Overlay */
+        .modal-blur { backdrop-filter: blur(10px); background: rgba(0, 51, 102, 0.85); }
     </style>
 </head>
-<body>
+<body x-data="appData()" x-init="init()">
 
-    <!-- AUTHENTICATION OVERLAY -->
-    <div id="auth-overlay">
-        <div class="login-box">
-            <h2>അഹ്‌ലൻ വസഹ്‌ലൻ</h2>
-            <p style="margin-bottom: 20px; color: #666;">Enter your details to track your Salah progress.</p>
-            
-            <div class="input-group">
-                <label>STUDENT NAME</label>
-                <input type="text" id="user-name" placeholder="e.g. Ayesha Syed" autocomplete="name">
+    <!-- 1. MANDATORY SIGN-IN MODAL -->
+    <div x-show="showLogin" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-blur">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 border-t-8 border-sky-blue overflow-y-auto max-h-[90vh]">
+            <div class="text-center mb-6">
+                <img src="https://i.postimg.cc/0jRBv0Vp/logo.png" alt="Logo" class="h-12 mx-auto mb-4">
+                <h2 class="text-2xl font-extrabold text-deep-blue">Student Sign-In</h2>
+                <p class="text-sm text-slate-500">Welcome to Tajweedul Quran Academy. Please enter your details to proceed.</p>
             </div>
-
-            <div class="input-group">
-                <label>SELECT COUNTRY / TIMEZONE</label>
-                <select id="user-country">
-                    <option value="">Choose Country...</option>
-                    <option value="Qatar">Qatar (ഖത്തർ)</option>
-                    <option value="Saudi Arabia">Saudi Arabia (സൗദി അറേബ്യ)</option>
-                    <option value="United Arab Emirates">UAE (യു.എ.ഇ)</option>
-                    <option value="India">India (ഇന്ത്യ)</option>
-                    <option value="United Kingdom">UK (ബ്രിട്ടൻ)</option>
-                    <option value="USA">USA (അമേരിക്ക)</option>
-                </select>
-            </div>
-
-            <button class="btn-start" onclick="handleLogin()">Access SalahTrack</button>
+            <form @submit.prevent="submitLogin()" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-deep-blue mb-1 uppercase">Student Name</label>
+                    <input type="text" x-model="loginForm.name" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-blue outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-deep-blue mb-1 uppercase">Email Address</label>
+                    <input type="email" x-model="loginForm.email" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-blue outline-none transition">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-deep-blue mb-1 uppercase">Age</label>
+                        <input type="number" x-model="loginForm.age" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-blue outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-deep-blue mb-1 uppercase">Country</label>
+                        <select x-model="loginForm.country" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-blue outline-none transition">
+                            <option value="Qatar">Qatar</option>
+                            <option value="India">India</option>
+                            <option value="USA">USA</option>
+                            <option value="UK">UK</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-deep-blue mb-1 uppercase">WhatsApp Number</label>
+                    <input type="tel" x-model="loginForm.whatsapp" required placeholder="+974 / +91 ..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-blue outline-none transition">
+                </div>
+                <button type="submit" class="w-full bg-deep-blue text-white font-bold py-4 rounded-xl shadow-lg hover:bg-sky-blue hover:text-deep-blue transition duration-300 transform active:scale-95">
+                    Sign In & Access Website
+                </button>
+            </form>
         </div>
     </div>
 
-    <!-- MAIN APP CONTENT -->
-    <div id="app-container" class="hidden">
-        <header>
-            <div class="academy-name">Tajweed Ul Qur'an Academy</div>
-            <div class="app-subtitle">SalahTrack (തَتَبُّعُ الصَّلَاةِ)</div>
-        </header>
+    <!-- 2. TOP MOVING BANNER -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            Online & Offline Classes Available All Over the World
+        </div>
+    </div>
 
-        <div class="container">
-            <div class="dashboard-grid">
-                <!-- Profile Details -->
-                <div class="card">
-                    <div style="font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px;">ACTIVE STUDENT</div>
-                    <h3 id="display-name" style="font-size: 1.4rem;">Student Name</h3>
-                    <p id="display-location" style="color: #666; font-size: 0.9rem;">📍 Location</p>
-                    <button onclick="logout()" style="margin-top: 10px; background: none; border: none; color: var(--danger); cursor: pointer; font-size: 0.8rem; text-decoration: underline;">Switch Profile</button>
-                </div>
+    <!-- Header Navigation -->
+    <header class="bg-white sticky top-0 z-50 shadow-sm border-b border-slate-100">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="https://i.postimg.cc/0jRBv0Vp/logo.png" alt="Logo" class="logo-img">
+                <span class="text-lg font-bold tracking-tight text-deep-blue hidden sm:inline">Tajweedul Quran <span class="text-sky-blue">Academy</span></span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-bold uppercase tracking-wider">
+                <a href="#home" class="text-deep-blue hover:text-sky-blue transition">Home</a>
+                <a href="#salahtrack" class="text-deep-blue hover:text-sky-blue transition">Salah Tracker</a>
+                <a href="#tuition" class="text-deep-blue hover:text-sky-blue transition">Tuition</a>
+            </div>
+            <a href="https://wa.me/c/97339903645" class="bg-deep-blue text-white px-6 py-2.5 rounded-full text-xs font-bold hover:bg-sky-blue hover:text-deep-blue transition shadow-md">Join Now</a>
+        </nav>
+    </header>
 
-                <!-- Live Clock -->
-                <div class="card" style="text-align: center;">
-                    <div style="font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px;">LOCAL TIME</div>
-                    <div id="live-clock">00:00:00</div>
-                    <div id="display-date" style="font-size: 0.9rem; color: #666;">Date</div>
+    <!-- Poster Image Section -->
+    <section id="home" class="container mx-auto px-4 mt-6">
+        <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-50">
+            <img src="https://i.postimg.cc/x15Gk0gY/poster-image.jpg" alt="Academy Poster" class="w-full h-auto object-cover">
+        </div>
+    </section>
+
+    <!-- 3. SALAH TRACKER & COUNTER -->
+    <section id="salahtrack" class="salahtrack-section py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-6xl font-black text-deep-blue mb-4">Daily Salah Tracker</h2>
+                <div class="h-1.5 w-24 bg-sky-blue mx-auto rounded-full mb-8"></div>
+                
+                <!-- STUDENT COUNTRY COUNTER -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                        <p class="text-2xl mb-1">🇶🇦</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Qatar</p>
+                        <p class="text-xl font-extrabold text-deep-blue" x-text="stats.Qatar"></p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                        <p class="text-2xl mb-1">🇮🇳</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">India</p>
+                        <p class="text-xl font-extrabold text-deep-blue" x-text="stats.India"></p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                        <p class="text-2xl mb-1">🇺🇸</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">USA</p>
+                        <p class="text-xl font-extrabold text-deep-blue" x-text="stats.USA"></p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                        <p class="text-2xl mb-1">🇬🇧</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">UK</p>
+                        <p class="text-xl font-extrabold text-deep-blue" x-text="stats.UK"></p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Salah Checklist -->
-            <h3 style="margin-bottom: 15px; font-family: 'Amiri', serif; color: var(--primary-green); font-size: 1.8rem;">Daily Checklist</h3>
-            <div id="salah-list" class="salah-container">
-                <!-- Generated dynamically via JS -->
+            <!-- 4. DYNAMIC TIMEZONE & PRAYER ALERT -->
+            <div class="max-w-4xl mx-auto mb-10 grid md:grid-cols-2 gap-6">
+                <!-- Clock Card -->
+                <div class="bg-deep-blue rounded-3xl p-8 text-white shadow-xl flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] uppercase font-bold text-sky-blue tracking-widest mb-2">Student Timezone</p>
+                        <h4 class="text-3xl font-bold" x-text="localTime">00:00:00</h4>
+                        <p class="text-xs opacity-70 mt-1" x-text="userCountry + ' Local Time'"></p>
+                    </div>
+                    <div class="text-5xl opacity-20">🕒</div>
+                </div>
+                <!-- Prayer Alert Card -->
+                <div class="bg-white border-2 border-orange-400 rounded-3xl p-8 shadow-xl flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] uppercase font-bold text-orange-500 tracking-widest mb-2">Salah Reminder</p>
+                        <h4 class="text-xl font-extrabold text-deep-blue">Dhuhr / Asr Prayer</h4>
+                        <p class="text-xs text-slate-500 mt-1">Remember to perform your prayer on time!</p>
+                    </div>
+                    <div class="text-5xl animate-pulse">🕌</div>
+                </div>
             </div>
 
-            <div class="save-section">
-                <button class="btn-save" onclick="saveToLocalStorage()">💾 Save Daily Progress</button>
-                <p id="save-status" style="margin-top: 10px; font-size: 0.8rem; color: var(--success); opacity: 0; transition: opacity 0.3s;">Progress saved to logs!</p>
+            <!-- Tracking Dashboard -->
+            <div class="max-w-4xl mx-auto bg-white rounded-3xl p-8 shadow-2xl border border-slate-100">
+                <div class="flex justify-between items-center mb-10 pb-6 border-b border-slate-100">
+                    <div>
+                        <h3 class="text-xl font-bold text-deep-blue">Active Student: <span class="text-sky-blue" x-text="loginForm.name">Student</span></h3>
+                        <p class="text-xs text-slate-400">Keep tracking to earn your Salah Stars!</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] font-bold text-deep-blue uppercase">Total Points</p>
+                        <p class="text-3xl font-black text-sky-blue" x-text="points"></p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <template x-for="prayer in ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']" :key="prayer">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-slate-50 rounded-2xl hover:bg-slate-100 transition duration-300">
+                            <span class="font-bold text-deep-blue text-lg mb-3 sm:mb-0" x-text="prayer"></span>
+                            <div class="flex space-x-3">
+                                <button @click="mark(prayer, 'on_time')" :class="isMarked(prayer, 'on_time') ? 'bg-deep-blue text-white shadow-lg' : 'bg-white text-slate-400 border border-slate-200'" class="px-6 py-2.5 rounded-xl text-xs font-bold uppercase transition">On Time</button>
+                                <button @click="mark(prayer, 'late')" :class="isMarked(prayer, 'late') ? 'bg-orange-500 text-white shadow-lg' : 'bg-white text-slate-400 border border-slate-200'" class="px-6 py-2.5 rounded-xl text-xs font-bold uppercase transition">Late</button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
             </div>
         </div>
+    </section>
 
-        <footer>
-            &copy; 2024 Tajweed Ul Qur'an Academy. <br>
-            "Keep up your prayers, for prayer keeps you away from indecency and evil."
-        </footer>
-    </div>
+    <!-- 5. ACADEMIC TUITION & CURRICULUM SECTION -->
+    <section id="tuition" class="py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2">
+                    <span class="text-sky-blue font-black uppercase tracking-widest text-xs">Global Education</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-deep-blue mt-3 mb-6 leading-tight">Academic Tuition <br>for All Curriculums</h2>
+                    <p class="text-slate-600 mb-8 leading-relaxed text-lg">We provide specialized academic support for students across various global educational systems. Our expert tutors ensure students achieve excellence in their school subjects alongside Islamic education.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+                        <div class="p-6 bg-slate-50 rounded-3xl border-b-4 border-sky-blue shadow-sm">
+                            <p class="font-bold text-deep-blue mb-1">British</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase">IGCSE / GCSE</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-3xl border-b-4 border-sky-blue shadow-sm">
+                            <p class="font-bold text-deep-blue mb-1">American</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase">US High School</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-3xl border-b-4 border-sky-blue shadow-sm">
+                            <p class="font-bold text-deep-blue mb-1">CBSE</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase">Indian National</p>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/c/97339903645" class="inline-flex items-center bg-deep-blue text-white px-10 py-5 rounded-2xl font-bold shadow-xl hover:bg-sky-blue hover:text-deep-blue transition transform hover:-translate-y-1">
+                        Explore Tuition Details
+                    </a>
+                </div>
+                <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="bg-sky-blue/20 h-52 rounded-3xl flex flex-col items-center justify-center text-center p-6 transform hover:scale-105 transition duration-500">
+                        <span class="text-5xl mb-4">🌍</span>
+                        <p class="text-sm font-bold text-deep-blue uppercase">Global Standards</p>
+                    </div>
+                    <div class="bg-slate-100 h-52 rounded-3xl flex flex-col items-center justify-center text-center p-6 transform translate-y-8 hover:scale-105 transition duration-500">
+                        <span class="text-5xl mb-4">🎓</span>
+                        <p class="text-sm font-bold text-deep-blue uppercase">Expert Faculty</p>
+                    </div>
+                    <div class="bg-slate-100 h-52 rounded-3xl flex flex-col items-center justify-center text-center p-6 hover:scale-105 transition duration-500">
+                        <span class="text-5xl mb-4">🔬</span>
+                        <p class="text-sm font-bold text-deep-blue uppercase">Science & Math</p>
+                    </div>
+                    <div class="bg-sky-blue/20 h-52 rounded-3xl flex flex-col items-center justify-center text-center p-6 transform translate-y-8 hover:scale-105 transition duration-500">
+                        <span class="text-5xl mb-4">💻</span>
+                        <p class="text-sm font-bold text-deep-blue uppercase">Digital Portal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. WEEKLY PERFORMANCE & WHATSAPP SUPPORT -->
+    <section class="py-24 bg-slate-50">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-3xl mx-auto">
+                <span class="text-sky-blue font-black uppercase tracking-widest text-xs">Progress Tracking</span>
+                <h2 class="text-3xl md:text-4xl font-black text-deep-blue mt-3 mb-6">Weekly Performance Analysis</h2>
+                <p class="text-slate-500 mb-12 text-lg">Every student's progress is monitored weekly. Our dedicated mentors provide personalized feedback and follow-up sessions to ensure consistent growth in both Quranic and Academic studies.</p>
+                
+                <div class="bg-white p-10 rounded-[40px] shadow-2xl border-2 border-dashed border-sky-blue inline-flex flex-col items-center">
+                    <p class="text-deep-blue font-bold text-xl mb-8">Ready to start your journey with us?</p>
+                    <a href="https://wa.me/c/97339903645" class="flex items-center space-x-3 bg-[#25D366] text-white px-12 py-5 rounded-full font-extrabold text-lg hover:scale-105 transition shadow-2xl">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/whatsapp.png" alt="WhatsApp Icon" class="w-6 h-6"/>
+                        <span>Contact Tajweed Academy WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Footer -->
+    <footer class="bg-deep-blue text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <img src="https://i.postimg.cc/0jRBv0Vp/logo.png" alt="Logo" class="h-12 mx-auto mb-8 brightness-0 invert">
+            <div class="flex justify-center space-x-8 mb-8 text-xs font-bold uppercase tracking-widest">
+                <a href="#home" class="hover:text-sky-blue transition">Home</a>
+                <a href="#salahtrack" class="hover:text-sky-blue transition">Salah Tracker</a>
+                <a href="#tuition" class="hover:text-sky-blue transition">Tuition</a>
+            </div>
+            <p class="text-[10px] font-medium tracking-widest uppercase opacity-40">
+                © 2026 Tajweedul Quran Academy. Global Leaders in Islamic & Academic Education.
+            </p>
+        </div>
+    </footer>
 
     <script>
-        let currentUser = null;
-        let prayerTimes = {};
-        const prayerNames = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+        function appData() {
+            return {
+                showLogin: true,
+                userCountry: 'Qatar',
+                localTime: '',
+                points: 0,
+                loginForm: { name: '', email: '', age: '', whatsapp: '', country: 'Qatar' },
+                tracking: {},
+                // Mock stats representing student counts
+                stats: { Qatar: 154, India: 328, USA: 86, UK: 112 },
 
-        const countryToCity = {
-            "Qatar": "Doha",
-            "Saudi Arabia": "Riyadh",
-            "United Arab Emirates": "Dubai",
-            "India": "Mumbai",
-            "United Kingdom": "London",
-            "USA": "New York"
-        };
-
-        window.onload = () => {
-            const saved = localStorage.getItem('salahTrack_User');
-            if (saved) {
-                currentUser = JSON.parse(saved);
-                startApp();
-            }
-            updateClock();
-            setInterval(updateClock, 1000);
-        };
-
-        function handleLogin() {
-            const name = document.getElementById('user-name').value.trim();
-            const country = document.getElementById('user-country').value;
-
-            if (!name || !country) {
-                alert("Please enter both Name and Country.");
-                return;
-            }
-
-            currentUser = { name, country };
-            localStorage.setItem('salahTrack_User', JSON.stringify(currentUser));
-            startApp();
-        }
-
-        function logout() {
-            if(confirm("Are you sure you want to log out? Your today's unsaved progress might be lost.")) {
-                localStorage.removeItem('salahTrack_User');
-                location.reload();
-            }
-        }
-
-        async function startApp() {
-            document.getElementById('auth-overlay').classList.add('hidden');
-            document.getElementById('app-container').classList.remove('hidden');
-            
-            document.getElementById('display-name').innerText = currentUser.name;
-            document.getElementById('display-location').innerText = `📍 ${currentUser.country}`;
-
-            updateClock(); // Run once immediately
-            await fetchPrayerTimes();
-            renderSalahList();
-            loadDailyProgress();
-        }
-
-        function updateClock() {
-            const now = new Date();
-            const clock = document.getElementById('live-clock');
-            const dateDisplay = document.getElementById('display-date');
-            if (clock) {
-                clock.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-                dateDisplay.innerText = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            }
-        }
-
-        async function fetchPrayerTimes() {
-            const city = countryToCity[currentUser.country] || "London";
-            try {
-                const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${currentUser.country}&method=2`);
-                if (!response.ok) throw new Error("Network response was not ok");
-                const result = await response.json();
-                prayerTimes = result.data.timings;
-            } catch (err) {
-                console.error("Failed to fetch timings, using fallback", err);
-                prayerTimes = { Fajr: "05:00", Dhuhr: "12:30", Asr: "15:30", Maghrib: "18:20", Isha: "19:45", Sunrise: "06:15" };
-            }
-        }
-
-        function renderSalahList() {
-            const list = document.getElementById('salah-list');
-            list.innerHTML = '';
-
-            prayerNames.forEach(p => {
-                const item = document.createElement('div');
-                item.className = 'salah-item';
-                item.id = `salah-${p}`;
-                item.innerHTML = `
-                    <div class="salah-info">
-                        <h4>${p}</h4>
-                        <div class="salah-time">Adhan: ${prayerTimes[p]}</div>
-                        <span id="badge-${p}" class="status-badge" style="display:none;"></span>
-                    </div>
-                    <div class="checkbox-wrapper">
-                        <input type="checkbox" id="check-${p}" onchange="toggleSalah('${p}')">
-                    </div>
-                `;
-                list.appendChild(item);
-            });
-        }
-
-        function toggleSalah(pName) {
-            const checkbox = document.getElementById(`check-${pName}`);
-            const item = document.getElementById(`salah-${pName}`);
-            const badge = document.getElementById(`badge-${pName}`);
-
-            if (checkbox.checked) {
-                item.classList.add('completed');
-                const status = checkTimingStatus(pName);
-                
-                if (status === 'on-time') {
-                    badge.innerText = "✨ Performed On Time";
-                    badge.className = "status-badge badge-on-time";
-                } else {
-                    badge.innerText = "⚠️ Completed (Late)";
-                    badge.className = "status-badge badge-late";
-                }
-                badge.style.display = 'inline-block';
-            } else {
-                item.classList.remove('completed');
-                badge.style.display = 'none';
-            }
-        }
-
-        function checkTimingStatus(pName) {
-            const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
-            const getMinutes = (str) => {
-                const [h, m] = str.split(':');
-                return parseInt(h) * 60 + parseInt(m);
-            };
-
-            const startTime = getMinutes(prayerTimes[pName]);
-            let endTime;
-
-            if (pName === "Fajr") {
-                endTime = getMinutes(prayerTimes.Sunrise);
-            } else if (pName === "Dhuhr") {
-                endTime = getMinutes(prayerTimes.Asr);
-            } else if (pName === "Asr") {
-                endTime = getMinutes(prayerTimes.Maghrib);
-            } else if (pName === "Maghrib") {
-                endTime = getMinutes(prayerTimes.Isha);
-            } else { // Isha
-                // Isha logic: On time if between Isha Adhan and Midnight OR between Midnight and Fajr of next day
-                const fajrNext = getMinutes(prayerTimes.Fajr);
-                if (currentMinutes >= startTime || currentMinutes < fajrNext) {
-                    return 'on-time';
-                }
-                return 'late';
-            }
-
-            return (currentMinutes >= startTime && currentMinutes <= endTime) ? 'on-time' : 'late';
-        }
-
-        function saveToLocalStorage() {
-            const progress = {};
-            prayerNames.forEach(p => {
-                const badge = document.getElementById(`badge-${p}`);
-                progress[p] = {
-                    checked: document.getElementById(`check-${p}`).checked,
-                    badgeText: badge.innerText,
-                    badgeClass: badge.className,
-                    display: badge.style.display
-                };
-            });
-
-            const today = new Date().toLocaleDateString();
-            localStorage.setItem('salahTrack_Daily', JSON.stringify({ date: today, data: progress }));
-            
-            const msg = document.getElementById('save-status');
-            msg.style.opacity = '1';
-            setTimeout(() => msg.style.opacity = '0', 2000);
-        }
-
-        function loadDailyProgress() {
-            const saved = localStorage.getItem('salahTrack_Daily');
-            if (!saved) return;
-
-            const parsed = JSON.parse(saved);
-            const today = new Date().toLocaleDateString();
-
-            if (parsed.date === today) {
-                prayerNames.forEach(p => {
-                    const savedData = parsed.data[p];
-                    if (savedData && savedData.checked) {
-                        const cb = document.getElementById(`check-${p}`);
-                        const badge = document.getElementById(`badge-${p}`);
-                        const item = document.getElementById(`salah-${p}`);
-                        
-                        cb.checked = true;
-                        item.classList.add('completed');
-                        badge.innerText = savedData.badgeText;
-                        badge.className = savedData.badgeClass;
-                        badge.style.display = savedData.display;
+                init() {
+                    // Check if user is already signed in
+                    const savedUser = localStorage.getItem('tajweedUser_v2');
+                    if (savedUser) {
+                        this.loginForm = JSON.parse(savedUser);
+                        this.userCountry = this.loginForm.country;
+                        this.showLogin = false;
+                        this.incrementCounter();
                     }
-                });
+                    this.updateClock();
+                    setInterval(() => this.updateClock(), 1000);
+                },
+
+                submitLogin() {
+                    if(!this.loginForm.name || !this.loginForm.email) return;
+                    localStorage.setItem('tajweedUser_v2', JSON.stringify(this.loginForm));
+                    this.userCountry = this.loginForm.country;
+                    this.showLogin = false;
+                    this.incrementCounter();
+                },
+
+                incrementCounter() {
+                    // Increment the counter for the user's specific country
+                    if (this.stats[this.userCountry] !== undefined) {
+                        this.stats[this.userCountry]++;
+                    }
+                },
+
+                updateClock() {
+                    // Mapping common countries to timezones
+                    const timezones = { 
+                        'Qatar': 'Asia/Qatar', 
+                        'India': 'Asia/Kolkata', 
+                        'USA': 'America/New_York', 
+                        'UK': 'Europe/London',
+                        'Other': 'UTC'
+                    };
+                    
+                    const options = { 
+                        timeZone: timezones[this.userCountry] || 'UTC', 
+                        hour: '2-digit', minute: '2-digit', second: '2-digit',
+                        hour12: true 
+                    };
+                    
+                    try {
+                        this.localTime = new Intl.DateTimeFormat('en-US', options).format(new Date());
+                    } catch (e) {
+                        this.localTime = new Date().toLocaleTimeString();
+                    }
+                },
+
+                mark(prayer, status) {
+                    this.tracking[prayer] = status;
+                    this.calculatePoints();
+                },
+
+                isMarked(prayer, status) {
+                    return this.tracking[prayer] === status;
+                },
+
+                calculatePoints() {
+                    let total = 0;
+                    Object.values(this.tracking).forEach(status => {
+                        if (status === 'on_time') total += 10;
+                        if (status === 'late') total += 5;
+                    });
+                    this.points = total;
+                }
             }
         }
     </script>
