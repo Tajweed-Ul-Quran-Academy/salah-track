@@ -106,6 +106,7 @@
         .gold-btn:hover {
             background-color: #b45309;
         }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
@@ -122,7 +123,7 @@
         <div class="flex items-center gap-4">
             <img src="https://i.postimg.cc/q7VyHnZg/logo.png" alt="Tajweedul Quran Academy Logo" style="max-height: 80px; width: auto; object-fit: contain;">
             <div>
-                <h1 class="font-bold text-slate-900 text-lg md:text-2xl tracking-tight leading-none">TAJWEEDUL QURAN ACADEMY</h1>
+                <h1 class="font-bold text-slate-900 text-lg md:text-2xl tracking-tight leading-none uppercase">TAJWEEDUL QURAN ACADEMY</h1>
                 <div class="methodology-badge mt-1">Following Ahlu Sunnah Wal Jama'ah Methodology</div>
             </div>
         </div>
@@ -146,14 +147,14 @@
             </div>
 
             <form id="registration-form" class="glass-card p-8 space-y-4">
-                <h4 class="text-lg font-bold text-slate-900 border-b border-slate-200 pb-2 mb-4">Registration Portal</h4>
+                <h4 class="text-lg font-bold text-slate-900 border-b border-slate-200 pb-2 mb-4 text-center uppercase tracking-widest">Registration Portal</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input type="text" id="reg-name" placeholder="Full Name" class="w-full" required>
                     <input type="number" id="reg-age" placeholder="Age" class="w-full" required>
                 </div>
                 <select id="reg-country" class="w-full" required>
                     <option value="">Select Your Country</option>
-                    <!-- JavaScript will populate -->
+                    <!-- JavaScript will fill this -->
                 </select>
                 <input type="tel" id="reg-whatsapp" placeholder="WhatsApp Number (e.g. +973...)" class="w-full" required>
                 <input type="email" id="reg-email" placeholder="Email Address" class="w-full" required>
@@ -191,11 +192,11 @@
 
             <!-- Profile Switcher (Multiple Students) -->
             <div id="sibling-bar" class="flex gap-3 overflow-x-auto py-2 scrollbar-hide">
-                <!-- Sibling tabs injected by JS -->
+                <!-- Profile tabs injected via JS -->
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Left: Prayer Tracking -->
+                <!-- Left Content: Tracker -->
                 <div class="lg:col-span-2 space-y-6">
                     <div class="glass-card p-6">
                         <div class="flex justify-between items-center mb-6">
@@ -220,24 +221,26 @@
                     </div>
                 </div>
 
-                <!-- Right: Leaderboard & Meta -->
+                <!-- Sidebar Content -->
                 <div class="space-y-6">
+                    <!-- Leaderboard -->
                     <div class="glass-card p-6 border-t-8 border-slate-900">
                         <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
                             <i class="fas fa-crown text-amber-500"></i> Weekly Hall of Fame
                         </h3>
                         <div id="leaderboard" class="space-y-4">
-                            <!-- Leaderboard injected by JS -->
+                            <!-- Leaderboard ranks injected by JS -->
                         </div>
                     </div>
 
+                    <!-- Ad Banner -->
                     <div class="bg-slate-900 rounded-3xl p-6 text-white shadow-2xl relative overflow-hidden">
                         <div class="relative z-10">
-                            <h4 class="text-lg font-bold text-amber-400">Advance Your Learning</h4>
+                            <h4 class="text-lg font-bold text-amber-400 uppercase">Advance Your Learning</h4>
                             <p class="text-slate-300 text-sm mb-4">Enroll in Specialized Quran & Arabic studies for all ages.</p>
                             <a href="https://wa.me/c/97339903645" target="_blank" class="gold-btn px-4 py-2 rounded-lg font-bold text-sm inline-block">WhatsApp Catalog</a>
                         </div>
-                        <i class="fas fa-quran absolute -bottom-6 -right-6 text-8xl opacity-10 rotate-12"></i>
+                        <i class="fas fa-book-quran absolute -bottom-6 -right-6 text-8xl opacity-10 rotate-12"></i>
                     </div>
                 </div>
             </div>
@@ -245,7 +248,7 @@
 
         <!-- COURSES SECTION -->
         <section id="courses" class="py-16">
-            <h2 class="text-3xl font-black text-center text-slate-900 mb-4">Academic & Islamic Courses</h2>
+            <h2 class="text-3xl font-black text-center text-slate-900 mb-4 uppercase">Academic & Islamic Courses</h2>
             <div class="w-24 h-1 bg-amber-500 mx-auto mb-12"></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Course cards injected by JS -->
@@ -289,7 +292,7 @@
             </div>
             <div>
                 <h5 class="font-bold text-lg text-amber-500 mb-6 uppercase tracking-widest">Contact Details</h5>
-                <p class="text-slate-300 mb-2 font-bold underline underline-offset-4">+973 3990 3645</p>
+                <p class="text-slate-300 mb-2 font-bold underline underline-offset-4 tracking-tighter text-lg">+973 3990 3645</p>
                 <p class="text-slate-400 text-sm">Online & Offline Classes Worldwide</p>
             </div>
         </div>
@@ -303,6 +306,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, setDoc, doc, getDoc, getDocs, updateDoc, increment, query, orderBy, limit, onSnapshot, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // FIREBASE INITIALIZATION
         const firebaseConfig = {
             apiKey: "AIzaSyAs-SimulatedKey-For-Demonstration",
             authDomain: "salahtrack-academy.firebaseapp.com",
@@ -315,6 +319,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // APP STATE
         let appData = {
             user: JSON.parse(localStorage.getItem('salah_user')) || null,
             activeStudentId: localStorage.getItem('active_student_id') || null,
@@ -344,7 +349,7 @@
             try {
                 const q = query(collection(db, "users"));
                 const querySnapshot = await getDocs(q);
-                document.getElementById('global-counter').innerText = querySnapshot.size || "142";
+                document.getElementById('global-counter').innerText = querySnapshot.size || "168";
             } catch (e) { document.getElementById('global-counter').innerText = "150+"; }
         }
 
@@ -356,13 +361,13 @@
             if(dateEl) dateEl.innerText = now.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric'});
         }
 
-        // --- REGISTRATION ---
+        // --- REGISTRATION LOGIC ---
         const regForm = document.getElementById('registration-form');
         if(regForm) {
             regForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const btn = e.target.querySelector('button');
-                btn.innerText = "Setting Up...";
+                btn.innerText = "Wait, Setting Up...";
                 btn.disabled = true;
 
                 const userData = {
@@ -379,14 +384,13 @@
                     await setDoc(userRef, userData);
 
                     const studentId = `std_${Date.now()}`;
-                    const studentData = {
+                    await setDoc(doc(db, "students", studentId), {
                         id: studentId,
                         parentEmail: userData.email,
                         name: userData.name,
                         points: 0,
                         milestoneAlerted: false
-                    };
-                    await setDoc(doc(db, "students", studentId), studentData);
+                    });
 
                     localStorage.setItem('salah_user', JSON.stringify(userData));
                     localStorage.setItem('active_student_id', studentId);
@@ -395,7 +399,7 @@
 
                     showDashboard();
                 } catch (err) {
-                    alert("System error. Please contact the administrator.");
+                    alert("Registration failed. Please contact Academy Admin.");
                 } finally {
                     btn.disabled = false;
                     btn.innerText = "Launch Dashboard";
@@ -403,11 +407,11 @@
             });
         }
 
-        // --- DASHBOARD ---
+        // --- DASHBOARD LOGIC ---
         async function showDashboard() {
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
-            document.getElementById('user-location').innerText = `Your Tracked Country: ${appData.user.country}`;
+            document.getElementById('user-location').innerText = `Tracked Country: ${appData.user.country}`;
             
             await fetchPrayerTimes();
             loadStudentProfiles();
@@ -446,8 +450,8 @@
                             ${p.id[0]}
                         </div>
                         <div>
-                            <p class="font-black text-slate-800 text-lg uppercase">${p.id} <span class="arabic-font text-amber-600 ml-2 font-normal">${p.ar}</span></p>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Starts @ ${time}</p>
+                            <p class="font-black text-slate-800 text-lg uppercase">${p.id} <span class="arabic-font text-amber-600 ml-2 font-normal lowercase">${p.ar}</span></p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Athan @ ${time}</p>
                         </div>
                     </div>
                     <div class="flex gap-2 w-full md:w-auto">
@@ -469,7 +473,7 @@
             sunnahs.forEach(s => {
                 const item = document.createElement('div');
                 item.className = "bg-slate-50 p-4 rounded-xl flex justify-between items-center border border-slate-100 hover:shadow-md transition";
-                item.innerHTML = `<span class="text-sm font-bold text-slate-700">${s}</span><button onclick="addBonusPoints(5, '${s}')" class="bg-amber-100 text-amber-700 px-3 py-1 rounded-lg text-xs font-black">+5 PTS</button>`;
+                item.innerHTML = `<span class="text-sm font-bold text-slate-700 uppercase tracking-tight">${s}</span><button onclick="addBonusPoints(5, '${s}')" class="bg-amber-100 text-amber-700 px-3 py-1 rounded-lg text-xs font-black">+5 PTS</button>`;
                 list.appendChild(item);
             });
         }
@@ -481,7 +485,7 @@
             const pTime = new Date(); pTime.setHours(parseInt(sHour), parseInt(sMin), 0);
 
             if (status === 'ontime' && now > new Date(pTime.getTime() + 20 * 60000)) {
-                alert("Alert: More than 20 mins passed. Marked as Late.");
+                alert("Reminder: It has been more than 20 mins since Athan. Marking as LATE.");
                 status = 'late';
             }
 
@@ -499,14 +503,14 @@
                 document.getElementById('total-points').innerText = curPts;
 
                 if (curPts >= 500 && !snap.data().milestoneAlerted) { triggerMilestone(snap.data()); }
-                alert(`${pts} Points awarded for ${label}!`);
+                alert(`SubhanAllah! ${pts} Points awarded for ${label}!`);
             } catch (e) { console.error(e); }
         };
 
         async function triggerMilestone(studentData) {
             document.getElementById('milestone-modal').classList.remove('hidden');
             await updateDoc(doc(db, "students", studentData.id), { milestoneAlerted: true });
-            const msg = `MILESTONE: ${studentData.name} (${appData.user.email}) has reached 500 Points!`;
+            const msg = `MILESTONE REACHED! ${studentData.name} (${appData.user.email}) has reached 500 Points on SalahTrack!`;
             window.open(`https://wa.me/97339903645?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -524,17 +528,17 @@
                 const data = doc.data();
                 const btn = document.createElement('button');
                 const isActive = appData.activeStudentId === data.id;
-                btn.className = `px-6 py-2 rounded-xl whitespace-nowrap transition-all font-bold ${isActive ? 'bg-slate-900 text-amber-400 shadow-xl scale-105 border-2 border-amber-500' : 'bg-white text-slate-500'}`;
+                btn.className = `px-6 py-2 rounded-xl whitespace-nowrap transition-all font-black uppercase text-xs tracking-widest ${isActive ? 'bg-slate-900 text-amber-400 shadow-xl scale-105 border-2 border-amber-500' : 'bg-white text-slate-500 border border-slate-100'}`;
                 btn.innerText = data.name;
                 btn.onclick = () => { localStorage.setItem('active_student_id', data.id); appData.activeStudentId = data.id; loadStudentProfiles(); };
                 container.appendChild(btn);
             });
 
             const addBtn = document.createElement('button');
-            addBtn.className = "px-6 py-2 rounded-xl border-2 border-dashed border-amber-300 text-amber-600 font-bold bg-white/50";
-            addBtn.innerText = "+ Add Child/Student";
+            addBtn.className = "px-6 py-2 rounded-xl border-2 border-dashed border-amber-300 text-amber-600 font-bold bg-white/50 text-xs uppercase tracking-widest";
+            addBtn.innerText = "+ Add Child Profile";
             addBtn.onclick = async () => {
-                const n = prompt("Student Name:");
+                const n = prompt("Enter Student Name:");
                 if(!n) return;
                 const sid = `std_${Date.now()}`;
                 await setDoc(doc(db, "students", sid), { id: sid, parentEmail: appData.user.email, name: n, points: 0, milestoneAlerted: false });
@@ -562,20 +566,38 @@
             });
         }
 
+        // --- COURSE RENDER (WITH SPECIFIC UPDATES) ---
         function renderCourses() {
             const courses = [
-                { t: "Tajweed & Quran", d: "Online/Offline classes with certified Egyptian & Indian scholars.", icon: "fa-quran" },
-                { t: "Islamic Studies", d: "Deep dive into Hadeeth, Fiqh, and History for all age groups.", icon: "fa-kaaba" },
-                { t: "Academic Tuition", d: "Comprehensive school support in a healthy Islamic environment.", icon: "fa-graduation-cap" }
+                { 
+                    t: "Tajweed & Quran", 
+                    d: "Master Quranic pronunciation with professional experienced teacher. Online/Offline classes with certified Egyptian & Indian scholars.", 
+                    icon: "fa-book-open" 
+                },
+                { 
+                    t: "Islamic Studies", 
+                    d: "Deep dive into Hadeeth, Fiqh, and Islamic History for all age groups.", 
+                    icon: "fa-kaaba" 
+                },
+                { 
+                    t: "Academic Tuition", 
+                    d: "Comprehensive school support in a healthy Islamic environment for all subjects.", 
+                    icon: "fa-graduation-cap" 
+                }
             ];
             const cont = document.getElementById('courses').querySelector('.grid');
+            if(!cont) return;
+            cont.innerHTML = '';
             courses.forEach(c => {
-                cont.innerHTML += `<div class="glass-card overflow-hidden hover:shadow-2xl transition-all border-b-8 border-amber-500">
-                    <div class="h-40 bg-slate-900 flex items-center justify-center text-amber-400 text-5xl"><i class="fas ${c.icon}"></i></div>
-                    <div class="p-8">
-                        <h4 class="font-black text-xl mb-2 text-slate-900">${c.t}</h4>
-                        <p class="text-slate-500 text-sm mb-6">${c.d}</p>
-                        <a href="https://wa.me/c/97339903645" target="_blank" class="block text-center primary-btn py-3 rounded-xl font-black">Register via WhatsApp</a>
+                cont.innerHTML += `
+                <div class="glass-card overflow-hidden hover:shadow-2xl transition-all border-b-8 border-amber-500 flex flex-col h-full">
+                    <div class="h-40 bg-slate-900 flex items-center justify-center text-5xl">
+                        <i class="fas ${c.icon}" style="color: #d97706;"></i>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h4 class="font-black text-xl mb-2 text-slate-900 uppercase tracking-tight">${c.t}</h4>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow">${c.d}</p>
+                        <a href="https://wa.me/c/97339903645" target="_blank" class="block text-center primary-btn py-3 rounded-xl font-black shadow-lg">REGISTER NOW</a>
                     </div>
                 </div>`;
             });
