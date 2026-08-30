@@ -3,170 +3,628 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tajweedul Quran Academy | SalahTrack & Global Portal</title>
-    
-    <!-- Tailwind CSS -->
+    <title>SalahTrack | Tajweedul Quran Academy</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Poppins & Amiri for Calligraphy -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Firebase SDK (Compatibility Version) -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'deep-blue': '#003366',
-                        'sky-blue': '#A0D8EF',
-                    },
-                    fontFamily: {
-                        calligraphy: ['Amiri', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #ffffff; color: #003366; overflow-x: hidden; }
-        [x-cloak] { display: none !important; }
-        
-        /* Smooth Moving Announcement Banner */
-        .marquee-container {
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-emerald: #064e3b;
+            --accent-gold: #d4af37;
+            --glass: rgba(255, 255, 255, 0.9);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('https://i.postimg.cc/MTKHQ26g/download.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            color: #1a202c;
+        }
+
+        .arabic-font { font-family: 'Amiri', serif; }
+
+        /* Ticker Animation */
+        .ticker-container {
+            background: var(--primary-emerald);
+            color: white;
             overflow: hidden;
             white-space: nowrap;
-            background: #003366;
-            padding: 12px 0;
-            border-bottom: 2px solid #A0D8EF;
+            padding: 8px 0;
         }
-        .marquee-content {
+        .ticker-text {
             display: inline-block;
-            animation: marquee 30s linear infinite;
-            color: white;
-            font-weight: 600;
-            font-size: 14px;
+            animation: marquee 25s linear infinite;
         }
         @keyframes marquee {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
 
-        .salahtrack-section {
-            position: relative;
-            background: linear-gradient(rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.97)), 
-                        url('https://www.transparenttextures.com/patterns/islamic-art.png');
-            background-attachment: fixed;
+        /* UI Components */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
-        .blue-gradient-text {
-            background: linear-gradient(to right, #003366, #3a7bd5, #003366);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .salah-btn {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .salah-btn:hover { transform: scale(1.05); }
+
+        .active-tab {
+            border-bottom: 4px solid var(--primary-emerald);
+            color: var(--primary-emerald);
+            font-weight: 700;
         }
 
-        .modal-blur { backdrop-filter: blur(10px); background: rgba(0, 51, 102, 0.85); }
-        
-        /* Logo containment to crop potential button overlays */
-        .logo-container {
-            width: 160px;
-            height: 50px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
+        input, select {
+            border: 1px solid #ddd !important;
+            padding: 0.75rem !important;
+            border-radius: 0.5rem !important;
         }
-        .logo-img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
+
+        .milestone-popup {
+            animation: popIn 0.5s cubic-bezier(0.26, 0.53, 0.74, 1.48);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Confetti simulation */
+        .confetti {
+            position: absolute; width: 10px; height: 10px; background: #ffd700;
         }
     </style>
 </head>
-<body x-data="appData()" x-init="init()">
+<body>
 
-    <!-- 1. FIREBASE SIGN-IN MODAL -->
-    <div x-show="showLogin" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-blur">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 border-t-8 border-sky-blue overflow-y-auto max-h-[90vh]">
-            <div class="text-center mb-6">
-                <img src="image_0.png" alt="Logo" class="h-14 mx-auto mb-4">
-                <h2 class="text-2xl font-extrabold text-deep-blue">Student Sign-In</h2>
-                <p class="text-sm text-slate-500">Welcome! Your SalahTrack is synced to the cloud.</p>
+    <!-- Top Announcement Bar -->
+    <div class="ticker-container fixed top-0 w-full z-[100]">
+        <div class="ticker-text text-sm md:text-base">
+            Online and offline classes all over the world | Enroll now for a better learning environment | صَلاَتِي حَيَاتِي - My Prayer is My Life | Register at Tajweedul Quran Academy Today!
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="mt-10 bg-white shadow-md px-6 py-3 flex justify-between items-center sticky top-10 z-50">
+        <div class="flex items-center gap-3">
+            <img src="https://i.postimg.cc/q7VyHnZg/logo.png" alt="Academy Logo" class="h-12 w-auto">
+            <div class="hidden md:block">
+                <h1 class="font-bold text-emerald-900 leading-none">TAJWEEDUL QURAN</h1>
+                <p class="text-xs text-emerald-700">ACADEMY</p>
             </div>
-            <form @submit.prevent="submitLogin()" class="space-y-4">
-                <input type="text" x-model="loginForm.name" placeholder="Full Name" required class="w-full px-4 py-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-sky-blue">
-                <input type="email" x-model="loginForm.email" placeholder="Email Address" required class="w-full px-4 py-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-sky-blue">
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="number" x-model="loginForm.age" placeholder="Age" required class="w-full px-4 py-3 bg-slate-50 border rounded-xl">
-                    <select x-model="loginForm.country" required class="w-full px-4 py-3 bg-slate-50 border rounded-xl">
-                        <option value="">Country</option>
-                        <template x-for="c in Object.keys(countryTimezones).sort()" :key="c">
-                            <option :value="c" x-text="c"></option>
-                        </template>
-                    </select>
+        </div>
+        <div class="flex items-center gap-6">
+            <a href="#" class="hidden lg:block text-emerald-800 font-medium hover:text-emerald-600">Home</a>
+            <a href="#courses" class="hidden lg:block text-emerald-800 font-medium hover:text-emerald-600">Courses</a>
+            <a href="https://wa.me/c/97339903645" target="_blank" class="bg-green-500 text-white px-5 py-2 rounded-full font-bold flex items-center gap-2 hover:bg-green-600">
+                <i class="fab fa-whatsapp"></i> Enroll / Login
+            </a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 max-w-6xl">
+
+        <!-- 1. PRE-DASHBOARD LANDING / REGISTRATION -->
+        <section id="auth-section" class="max-w-xl mx-auto py-10">
+            <div class="glass-card p-8 text-center mb-8">
+                <h2 class="arabic-font text-4xl text-emerald-900 mb-2">مرحبا</h2>
+                <h3 class="text-2xl font-bold text-gray-800">Welcome to SalahTrack</h3>
+                <p class="text-gray-600 mt-2">Tajweedul Quran Academy Global Tracking System</p>
+            </div>
+
+            <form id="registration-form" class="glass-card p-8 space-y-4">
+                <h4 class="text-lg font-semibold text-emerald-900 border-b pb-2">Student/Parent Registration</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="reg-name" placeholder="Full Name" class="w-full" required>
+                    <input type="number" id="reg-age" placeholder="Age" class="w-full" required>
                 </div>
-                <input type="tel" x-model="loginForm.whatsapp" placeholder="WhatsApp Number" required class="w-full px-4 py-3 bg-slate-50 border rounded-xl">
+                <select id="reg-country" class="w-full" required>
+                    <option value="">Select Country</option>
+                    <!-- JavaScript will fill this -->
+                </select>
+                <input type="tel" id="reg-whatsapp" placeholder="WhatsApp Number (e.g. +973...)" class="w-full" required>
+                <input type="email" id="reg-email" placeholder="Email Address" class="w-full" required>
                 
-                <button type="submit" :disabled="loading" class="w-full bg-deep-blue text-white font-bold py-4 rounded-xl shadow-lg hover:bg-sky-blue hover:text-deep-blue transition duration-300 transform active:scale-95 disabled:opacity-50">
-                    <span x-show="!loading">Connect & Enter Portal</span>
-                    <span x-show="loading">Establishing Cloud Sync...</span>
+                <button type="submit" class="w-full bg-emerald-800 text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-900 shadow-lg transition-all">
+                    Register & Open Dashboard
                 </button>
             </form>
-        </div>
-    </div>
+        </section>
 
-    <!-- 2. ANNOUNCEMENT BANNER -->
-    <div class="marquee-container">
-        <div class="marquee-content">
-            🌍 Online Classes Available Worldwide | 🇶🇦 Offline Classes Available in Qatar • 📜 Hifdh Program Open for Ladies & Kids • 🕌 Record Salah Early for Weekly Ranking
-        </div>
-    </div>
-
-    <!-- Header Navigation -->
-    <header class="bg-white sticky top-0 z-50 shadow-sm border-b border-slate-100">
-        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="logo-container">
-                <img src="image_0.png" alt="Tajweedul Quran Academy" class="logo-img">
-            </div>
-            <div class="hidden md:flex space-x-6 text-sm font-semibold text-deep-blue">
-                <a href="#courses" class="hover:text-sky-blue transition">Programs</a>
-                <a href="#salahtrack" class="hover:text-sky-blue transition">Salah Tracker</a>
-                <a href="https://wa.me/c/97339903645" class="hover:text-sky-blue transition">WhatsApp Catalog</a>
-            </div>
-            <div class="flex items-center space-x-3">
-                <button @click="logout()" x-show="!showLogin" class="text-xs font-bold text-red-500 uppercase px-3 py-1.5 rounded-lg border border-red-100">Logout</button>
-                <a href="https://wa.me/c/97339903645" class="bg-deep-blue text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-sky-blue hover:text-deep-blue transition">Join WhatsApp</a>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Poster Section -->
-    <section id="home" class="container mx-auto px-4 mt-6">
-        <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-50">
-            <img src="https://i.postimg.cc/x15Gk0gY/poster-image.jpg" alt="Academy Poster" class="w-full h-auto object-cover">
-        </div>
-    </section>
-
-    <!-- 3. COURSE CATALOG -->
-    <section id="courses" class="py-20 bg-slate-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-black text-deep-blue">Our Educational Programs</h2>
-                <p class="text-slate-500 mt-2">Available Online Worldwide | Offline in Qatar</p>
-            </div>
+        <!-- 2. MAIN DASHBOARD (HIDDEN UNTIL LOGIN) -->
+        <section id="dashboard-section" class="hidden space-y-8">
             
-            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <template x-for="course in courses" :key="course.title">
-                    <div class="bg-white rounded-[2rem] p-8 shadow-lg border border-slate-100 flex flex-col h-full hover:shadow-2xl transition duration-500 transform hover:-translate-y-2">
-                        <div class="mb-6 flex-grow">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-deep-blue bg-sky-blue/20 px-3 py-1 rounded-full" x-text="course.category"></span>
-                            <h3 class="text-xl font-bold text-deep-blue mt-4 leading-tight" x-text="course.title"></h3>
-                            <p class="text-slate-500 text-sm mt-3 leading-relaxed" x-text="course.desc"></p>
+            <!-- Dashboard Header -->
+            <div class="glass-card p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <h2 class="arabic-font text-3xl text-emerald-900">صَلاَتِي حَيَاتِي - SalahTrack</h2>
+                    <p id="live-clock" class="text-xl font-mono text-emerald-700 font-bold mt-1">00:00:00</p>
+                    <p id="user-location" class="text-sm text-gray-500 italic"></p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="text-center bg-white p-3 rounded-xl shadow-sm border border-emerald-100">
+                        <p class="text-xs uppercase text-gray-400 font-bold tracking-widest">Global Students</p>
+                        <p id="global-counter" class="text-2xl font-black text-emerald-800">...</p>
+                    </div>
+                    <div class="text-center bg-white p-3 rounded-xl shadow-sm border border-emerald-100">
+                        <p class="text-xs uppercase text-gray-400 font-bold tracking-widest">Your Points</p>
+                        <p id="total-points" class="text-2xl font-black text-emerald-800">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sibling Switcher -->
+            <div id="sibling-bar" class="flex gap-3 overflow-x-auto pb-2">
+                <!-- Profile tabs injected by JS -->
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Fard Prayer Tracker -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass-card p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-emerald-900"><i class="fas fa-mosque mr-2"></i>Fard Prayers</h3>
+                            <span id="current-date" class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm font-bold"></span>
                         </div>
-                        <a href="https://wa.me/c/97339903645" class="w-full bg-deep-blue text-white text-center py-4 rounded-2xl font-bold text-sm hover:bg-sky-blue hover:text-deep-blue transition shadow-lg">
-                            Register Now
-                        </a>
+                        <div id="prayer-list" class="space-y-4">
+                            <!-- Prayer rows injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Sunnah Tracker -->
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold text-emerald-900 mb-6"><i class="fas fa-star mr-2"></i>Sunnah & Bonus Prayers</h3>
+                        <div id="sunnah-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Sunnah items injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar: Leaderboard -->
+                <div class="space-y-6">
+                    <div class="glass-card p-6 border-t-4 border-emerald-800">
+                        <h3 class="text-xl font-bold text-emerald-900 mb-4 flex items-center gap-2">
+                            <i class="fas fa-trophy text-yellow-500"></i> Weekly Hall of Fame
+                        </h3>
+                        <div id="leaderboard" class="space-y-4">
+                            <!-- Top 3 injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Academy Courses Banner -->
+                    <div class="bg-emerald-900 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
+                        <div class="relative z-10">
+                            <h4 class="text-lg font-bold">Want to learn Quran?</h4>
+                            <p class="text-emerald-200 text-sm mb-4">Join our Online/Offline classes with certified teachers.</p>
+                            <a href="https://wa.me/c/97339903645" class="bg-white text-emerald-900 px-4 py-2 rounded-lg font-bold text-sm">Enroll Now</a>
+                        </div>
+                        <i class="fas fa-book-open absolute -bottom-4 -right-4 text-7xl opacity-10"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. COURSES SECTION -->
+        <section id="courses" class="py-12">
+            <h2 class="text-3xl font-bold text-center text-emerald-900 mb-10">Our Featured Courses</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Course Card 1 -->
+                <div class="glass-card overflow-hidden hover:shadow-2xl transition-all">
+                    <div class="h-40 bg-emerald-800 flex items-center justify-center text-white text-4xl">
+                        <i class="fas fa-quran"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-2">Tajweed & Quran</h4>
+                        <p class="text-gray-600 text-sm mb-4">Master Quranic pronunciation with professional Egyptian and Indian scholars.</p>
+                        <a href="https://wa.me/c/97339903645" class="block text-center bg-emerald-700 text-white py-2 rounded-lg font-bold">Details</a>
+                    </div>
+                </div>
+                <!-- Course Card 2 -->
+                <div class="glass-card overflow-hidden hover:shadow-2xl transition-all">
+                    <div class="h-40 bg-emerald-700 flex items-center justify-center text-white text-4xl">
+                        <i class="fas fa-kaaba"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-2">Islamic Studies</h4>
+                        <p class="text-gray-600 text-sm mb-4">Hadeeth, Fiqh, and Islamic History for children and adults of all levels.</p>
+                        <a href="https://wa.me/c/97339903645" class="block text-center bg-emerald-700 text-white py-2 rounded-lg font-bold">Details</a>
+                    </div>
+                </div>
+                <!-- Course Card 3 -->
+                <div class="glass-card overflow-hidden hover:shadow-2xl transition-all">
+                    <div class="h-40 bg-emerald-600 flex items-center justify-center text-white text-4xl">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-2">Academic Tuition</h4>
+                        <p class="text-gray-600 text-sm mb-4">Support for school subjects under a healthy Islamic learning environment.</p>
+                        <a href="https://wa.me/c/97339903645" class="block text-center bg-emerald-700 text-white py-2 rounded-lg font-bold">Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Milestone Celebration Modal -->
+    <div id="milestone-modal" class="fixed inset-0 bg-black/80 hidden z-[200] flex items-center justify-center p-4">
+        <div class="glass-card milestone-popup max-w-sm w-full p-8 text-center relative">
+            <button onclick="closeMilestone()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            <div class="text-6xl mb-4">🎁</div>
+            <h2 class="text-2xl font-bold text-emerald-900 mb-2">MashaAllah!</h2>
+            <p class="text-gray-700 mb-6">You have reached the 500 Points milestone! You earned a special gift from Tajweedul Quran Academy.</p>
+            <button onclick="closeMilestone()" class="w-full bg-emerald-800 text-white py-3 rounded-xl font-bold shadow-lg">Alhamdulillah!</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-950 text-white py-12 mt-20">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div class="col-span-1 md:col-span-2">
+                <img src="https://i.postimg.cc/q7VyHnZg/logo.png" class="h-16 mb-4 filter brightness-0 invert" alt="Logo">
+                <p class="text-emerald-200">Tajweedul Quran Academy provides high-quality Islamic and Academic education globally through online and offline platforms.</p>
+            </div>
+            <div>
+                <h5 class="font-bold text-lg mb-4">Quick Links</h5>
+                <ul class="space-y-2 text-emerald-300">
+                    <li><a href="#" class="hover:text-white">Home</a></li>
+                    <li><a href="#courses" class="hover:text-white">Courses</a></li>
+                    <li><a href="#" class="hover:text-white">Career</a></li>
+                    <li><a href="https://wa.me/c/97339903645" class="hover:text-white">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold text-lg mb-4">Contact</h5>
+                <p class="text-emerald-300"><i class="fab fa-whatsapp mr-2"></i> +973 3990 3645</p>
+                <p class="text-emerald-300"><i class="fab fa-instagram mr-2"></i> @tajweedul_quran_bh</p>
+            </div>
+        </div>
+        <div class="text-center mt-10 border-t border-emerald-900 pt-6 text-sm text-emerald-500">
+            &copy; 2024 Tajweedul Quran Academy. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- FIREBASE & LOGIC -->
+    <script type="module">
+        // Import Firebase (Modular CDN)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, setDoc, doc, getDoc, getDocs, updateDoc, increment, query, orderBy, limit, onSnapshot, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // FIREBASE CONFIGURATION (Replace with your actual keys)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAs-SimulatedKey-For-Demonstration",
+            authDomain: "salahtrack-academy.firebaseapp.com",
+            projectId: "salahtrack-academy",
+            storageBucket: "salahtrack-academy.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // State Management
+        let appData = {
+            user: JSON.parse(localStorage.getItem('salah_user')) || null,
+            activeStudentId: localStorage.getItem('active_student_id') || null,
+            students: [],
+            prayerTimes: null
+        };
+
+        // --- 1. CORE FUNCTIONS ---
+
+        const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Australia", "Austria", "Bahrain", "Bangladesh", "Belgium", "Brazil", "Canada", "China", "Egypt", "France", "Germany", "India", "Indonesia", "Iran", "Iraq", "Italy", "Japan", "Jordan", "Kuwait", "Lebanon", "Malaysia", "Maldives", "Morocco", "Oman", "Pakistan", "Palestine", "Qatar", "Saudi Arabia", "Singapore", "South Africa", "Spain", "Sudan", "Turkey", "UAE", "UK", "USA", "Yemen"];
+
+        function init() {
+            // Fill Country Dropdown
+            const countrySelect = document.getElementById('reg-country');
+            countries.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c; opt.textContent = c;
+                countrySelect.appendChild(opt);
+            });
+
+            if (appData.user) {
+                showDashboard();
+            }
+
+            updateClock();
+            setInterval(updateClock, 1000);
+            updateGlobalCounter();
+        }
+
+        async function updateGlobalCounter() {
+            try {
+                const q = query(collection(db, "users"));
+                const querySnapshot = await getDocs(q);
+                document.getElementById('global-counter').innerText = querySnapshot.size || "120+";
+            } catch (e) { document.getElementById('global-counter').innerText = "150+"; }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString();
+            document.getElementById('current-date').innerText = now.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric'});
+        }
+
+        // --- 2. REGISTRATION & AUTH ---
+
+        document.getElementById('registration-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            const userData = {
+                name: document.getElementById('reg-name').value,
+                age: document.getElementById('reg-age').value,
+                country: document.getElementById('reg-country').value,
+                whatsapp: document.getElementById('reg-whatsapp').value,
+                email: document.getElementById('reg-email').value,
+                joinedAt: new Date().toISOString()
+            };
+
+            try {
+                // Create Parent Account
+                const userRef = doc(db, "users", userData.email);
+                await setDoc(userRef, userData);
+
+                // Create Initial Student (Self/Child 1)
+                const studentId = `std_${Date.now()}`;
+                const studentRef = doc(db, "students", studentId);
+                const studentData = {
+                    id: studentId,
+                    parentEmail: userData.email,
+                    name: userData.name,
+                    points: 0,
+                    milestoneAlerted: false
+                };
+                await setDoc(studentRef, studentData);
+
+                // Store in LocalStorage
+                localStorage.setItem('salah_user', JSON.stringify(userData));
+                localStorage.setItem('active_student_id', studentId);
+                appData.user = userData;
+                appData.activeStudentId = studentId;
+
+                // Simulate Email Notification
+                console.log(`Confirmation email triggered to ${userData.email}`);
+
+                showDashboard();
+            } catch (err) {
+                console.error(err);
+                alert("Error connecting to database. Please try again.");
+            } finally {
+                btn.innerText = "Register & Open Dashboard";
+                btn.disabled = false;
+            }
+        });
+
+        // --- 3. DASHBOARD LOGIC ---
+
+        async function showDashboard() {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            document.getElementById('user-location').innerText = `Location: ${appData.user.country}`;
+            
+            await fetchPrayerTimes();
+            loadStudentProfiles();
+            loadLeaderboard();
+        }
+
+        async function fetchPrayerTimes() {
+            try {
+                const response = await fetch(`https://api.aladhan.com/v1/timingsByAddress?address=${appData.user.country}`);
+                const data = await response.json();
+                appData.prayerTimes = data.data.timings;
+                renderPrayerGrid();
+            } catch (e) {
+                console.error("Prayer API failed", e);
+            }
+        }
+
+        function renderPrayerGrid() {
+            const list = document.getElementById('prayer-list');
+            list.innerHTML = '';
+            
+            const prayers = [
+                { id: 'Fajr', ar: 'الفجر' },
+                { id: 'Dhuhr', ar: 'الظهر' },
+                { id: 'Asr', ar: 'العصر' },
+                { id: 'Maghrib', ar: 'المغرب' },
+                { id: 'Isha', ar: 'العشاء' }
+            ];
+
+            prayers.forEach(p => {
+                const time = appData.prayerTimes[p.id];
+                const row = document.createElement('div');
+                row.className = "flex flex-col md:flex-row items-center justify-between p-4 bg-white rounded-xl border border-gray-100 gap-4";
+                row.innerHTML = `
+                    <div class="flex items-center gap-4 w-full md:w-1/3">
+                        <div class="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-700 font-bold">
+                            ${p.id[0]}
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-800">${p.id} <span class="arabic-font text-emerald-600 ml-2">${p.ar}</span></p>
+                            <p class="text-xs text-gray-400">Start: ${time}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 w-full md:w-auto overflow-x-auto">
+                        <button onclick="logPrayer('${p.id}', 'ontime', '${time}')" class="salah-btn flex-1 bg-emerald-100 text-emerald-800 px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap">On Time (+10)</button>
+                        <button onclick="logPrayer('${p.id}', 'late', '${time}')" class="salah-btn flex-1 bg-amber-100 text-amber-800 px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap">Late (+5)</button>
+                        <button onclick="logPrayer('${p.id}', 'missed', '${time}')" class="salah-btn flex-1 bg-red-100 text-red-800 px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap">Missed (0)</button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+
+            renderSunnahGrid();
+        }
+
+        function renderSunnahGrid() {
+            const list = document.getElementById('sunnah-list');
+            list.innerHTML = '';
+            const sunnahs = [
+                "2 Before Fajr", "4 Before Dhuhr", "2 After Dhuhr", 
+                "4 Before Asr", "2 After Maghrib", "2 After Isha"
+            ];
+            sunnahs.forEach(s => {
+                const item = document.createElement('div');
+                item.className = "bg-white p-3 rounded-lg flex justify-between items-center border border-emerald-50";
+                item.innerHTML = `
+                    <span class="text-sm font-medium text-gray-700">${s}</span>
+                    <button onclick="addBonusPoints(5, '${s}')" class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded text-xs font-black">+5 PTS</button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // --- 4. TRACKING LOGIC ---
+
+        window.logPrayer = async (name, status, scheduledTime) => {
+            const now = new Date();
+            const [sHour, sMin] = scheduledTime.split(':');
+            const prayerTime = new Date();
+            prayerTime.setHours(parseInt(sHour), parseInt(sMin), 0);
+
+            // Warning if late
+            if (status === 'ontime' && now > new Date(prayerTime.getTime() + 30 * 60000)) {
+                alert("صبر! (Patience) You are marked Late because more than 30 mins have passed.");
+                status = 'late';
+            }
+
+            const points = status === 'ontime' ? 10 : (status === 'late' ? 5 : 0);
+            await addBonusPoints(points, `Prayer: ${name} (${status})`);
+        };
+
+        window.addBonusPoints = async (pts, label) => {
+            if (!appData.activeStudentId) return;
+            const studentRef = doc(db, "students", appData.activeStudentId);
+            
+            try {
+                await updateDoc(studentRef, {
+                    points: increment(pts)
+                });
+                
+                const snap = await getDoc(studentRef);
+                const currentPoints = snap.data().points;
+                document.getElementById('total-points').innerText = currentPoints;
+
+                // Milestone Logic
+                if (currentPoints >= 500 && !snap.data().milestoneAlerted) {
+                    triggerMilestone(snap.data());
+                }
+
+                alert(`${pts} Points added for ${label}! Keep it up.`);
+            } catch (e) { console.error(e); }
+        };
+
+        async function triggerMilestone(studentData) {
+            document.getElementById('milestone-modal').classList.remove('hidden');
+            
+            // Mark as alerted
+            await updateDoc(doc(db, "students", studentData.id), { milestoneAlerted: true });
+
+            // WhatsApp Admin Alert
+            const msg = `Salaam Admin, Student ${studentData.name} (${appData.user.email}) has reached 500 Salah points!`;
+            const waUrl = `https://wa.me/97339903645?text=${encodeURIComponent(msg)}`;
+            
+            // Auto-trigger WhatsApp notification (opens in background/new tab)
+            window.open(waUrl, '_blank');
+        }
+
+        window.closeMilestone = () => {
+            document.getElementById('milestone-modal').classList.add('hidden');
+        };
+
+        // --- 5. MULTI-STUDENT / SIBLING SWITCHER ---
+
+        async function loadStudentProfiles() {
+            const q = query(collection(db, "students"), where("parentEmail", "==", appData.user.email));
+            const querySnapshot = await getDocs(q);
+            const container = document.getElementById('sibling-bar');
+            container.innerHTML = '';
+            
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const btn = document.createElement('button');
+                btn.className = `px-6 py-2 rounded-full whitespace-nowrap transition ${appData.activeStudentId === data.id ? 'bg-emerald-800 text-white font-bold shadow-lg' : 'bg-white text-emerald-800 border border-emerald-100'}`;
+                btn.innerText = data.name;
+                btn.onclick = () => switchStudent(data.id);
+                container.appendChild(btn);
+            });
+
+            // Add Sibling Button
+            const addBtn = document.createElement('button');
+            addBtn.className = "px-6 py-2 rounded-full border-2 border-dashed border-emerald-300 text-emerald-600 text-sm";
+            addBtn.innerHTML = "+ Add Sibling";
+            addBtn.onclick = addNewSibling;
+            container.appendChild(addBtn);
+
+            // Set Initial Points
+            const activeDoc = await getDoc(doc(db, "students", appData.activeStudentId));
+            document.getElementById('total-points').innerText = activeDoc.data().points;
+        }
+
+        function switchStudent(id) {
+            localStorage.setItem('active_student_id', id);
+            appData.activeStudentId = id;
+            loadStudentProfiles();
+            alert(`Switched to student profile.`);
+        }
+
+        async function addNewSibling() {
+            const name = prompt("Enter Sibling Name:");
+            if (!name) return;
+            const studentId = `std_${Date.now()}`;
+            await setDoc(doc(db, "students", studentId), {
+                id: studentId,
+                parentEmail: appData.user.email,
+                name: name,
+                points: 0,
+                milestoneAlerted: false
+            });
+            switchStudent(studentId);
+        }
+
+        // --- 6. LEADERBOARD ---
+
+        async function loadLeaderboard() {
+            const q = query(collection(db, "students"), orderBy("points", "desc"), limit(3));
+            onSnapshot(q, (snapshot) => {
+                const list = document.getElementById('leaderboard');
+                list.innerHTML = '';
+                let rank = 1;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const item = document.createElement('div');
+                    item.className = "flex items-center justify-between p-3 bg-white rounded-xl shadow-sm";
+                    item.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full flex items-center justify-center font-bold ${rank === 1 ? 'bg-yellow-400' : 'bg-emerald-100'}">${rank}</span>
+                            <span class="font-semibold text-gray-700">${data.name}</span>
+                        </div>
+                        <span class="font-bold text-emerald-800">${data.points} pts</span>
+                    `;
+                    list.appendChild(item);
+                    rank++;
+                });
+            });
+        }
+
+        // Initialize Application
+        init();
+
+    </script>
+</body>
+</html>
