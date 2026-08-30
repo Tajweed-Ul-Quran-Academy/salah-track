@@ -6,7 +6,7 @@
     <title>SalahTrack | Tajweed Ul Qur'an Academy</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome 6.4.0 for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -63,7 +63,7 @@
         }
         .salah-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-        /* Subtle Professional Methodology Styling */
+        /* Methodology Styling */
         .methodology-subtitle {
             font-size: 13px;
             font-weight: 500;
@@ -113,21 +113,19 @@
 </head>
 <body>
 
-    <!-- Top Announcement Bar -->
+    <!-- Announcement Bar -->
     <div class="ticker-container fixed top-0 w-full z-[100]">
         <div class="ticker-text text-sm md:text-base">
             Online and offline classes all over the world | Enroll now for a better learning environment | صَلاَتِي حَيَاتِي - My Prayer is My Life | Register at Tajweed Ul Qur'an Academy Today!
         </div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Global Navigation -->
     <nav class="mt-11 bg-white shadow-lg px-6 py-4 flex justify-between items-center sticky top-11 z-50 border-b-2 border-amber-500">
         <div class="flex items-center gap-4">
             <img src="https://i.postimg.cc/q7VyHnZg/logo.png" alt="Tajweed Ul Qur'an Academy Logo" style="max-height: 80px; width: auto; object-fit: contain;">
             <div>
-                <!-- Brand Heading Update -->
                 <h1 class="font-bold text-slate-900 text-lg md:text-2xl tracking-tight leading-none uppercase">TAJWEED UL QUR'AN ACADEMY</h1>
-                <!-- Professional Methodology Styling Update -->
                 <div class="methodology-subtitle">
                     <i class="fas fa-circle-check" style="color: #d97706; font-size: 10px;"></i> Guided by Ahlu Sunnah Wal Jama'ah Methodology
                 </div>
@@ -144,7 +142,7 @@
 
     <main class="container mx-auto px-4 py-8 max-w-6xl">
 
-        <!-- ONBOARDING SECTION -->
+        <!-- 1. ONBOARDING & REGISTRATION -->
         <section id="auth-section" class="max-w-xl mx-auto py-6">
             <div class="glass-card p-8 text-center mb-8 border-b-4 border-amber-500">
                 <h2 class="arabic-font text-5xl text-slate-900 mb-2">مرحبا</h2>
@@ -170,7 +168,7 @@
             </form>
         </section>
 
-        <!-- DASHBOARD SECTION (Initially Hidden) -->
+        <!-- 2. MAIN TRACKER DASHBOARD -->
         <section id="dashboard-section" class="hidden space-y-8">
             <div class="glass-card p-6 flex flex-col md:flex-row justify-between items-center gap-6 border-l-8 border-amber-500">
                 <div>
@@ -193,11 +191,12 @@
                 </div>
             </div>
 
-            <!-- Profile Switcher -->
+            <!-- Sibling / Student Switcher -->
             <div id="sibling-bar" class="flex gap-3 overflow-x-auto py-2 scrollbar-hide"></div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-6">
+                    <!-- Fard Tracker -->
                     <div class="glass-card p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
@@ -207,6 +206,7 @@
                         </div>
                         <div id="prayer-list" class="space-y-4"></div>
                     </div>
+                    <!-- Sunnah Tracker -->
                     <div class="glass-card p-6 border-b-4 border-amber-400">
                         <h3 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                             <i class="fas fa-medal text-amber-500"></i> Sunnah Bonus Points
@@ -216,12 +216,14 @@
                 </div>
 
                 <div class="space-y-6">
+                    <!-- Hall of Fame -->
                     <div class="glass-card p-6 border-t-8 border-slate-900">
                         <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
                             <i class="fas fa-crown text-amber-500"></i> Weekly Hall of Fame
                         </h3>
                         <div id="leaderboard" class="space-y-4"></div>
                     </div>
+                    <!-- Ad Section -->
                     <div class="bg-slate-900 rounded-3xl p-6 text-white shadow-2xl relative overflow-hidden">
                         <div class="relative z-10">
                             <h4 class="text-lg font-bold text-amber-400 uppercase">Advance Your Learning</h4>
@@ -234,17 +236,17 @@
             </div>
         </section>
 
-        <!-- COURSES SECTION -->
+        <!-- 3. ACADEMY COURSES OVERVIEW -->
         <section id="courses" class="py-16">
             <h2 class="text-3xl font-black text-center text-slate-900 mb-4 uppercase">Academic & Islamic Courses</h2>
             <div class="w-24 h-1 bg-amber-500 mx-auto mb-12"></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Course Cards will be rendered here via renderCourses() -->
+                <!-- Course Cards injected via JavaScript -->
             </div>
         </section>
     </main>
 
-    <!-- Milestone Popup -->
+    <!-- Milestone Celebration Modal -->
     <div id="milestone-modal" class="fixed inset-0 bg-slate-900/90 hidden z-[200] flex items-center justify-center p-4 backdrop-blur-md">
         <div class="glass-card milestone-popup max-w-sm w-full p-10 text-center relative border-4 border-amber-400">
             <button onclick="closeMilestone()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fas fa-times text-xl"></i></button>
@@ -255,11 +257,13 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Global Footer -->
     <footer class="bg-slate-900 text-white py-16 mt-20 border-t-8 border-amber-500">
         <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="col-span-1 md:col-span-2">
-                <img src="https://i.postimg.cc/q7VyHnZg/logo.png" alt="Logo" style="max-height: 80px; width: auto; object-fit: contain;" class="mb-6 brightness-0 invert">
+                <!-- FIXED LOGO IN FOOTER -->
+                <img src="https://i.postimg.cc/q7VyHnZg/logo.png" alt="Tajweed Ul Qur'an Academy Logo" style="max-height: 70px; width: auto; object-fit: contain; background: transparent; display: block; margin-bottom: 15px;">
+                
                 <p class="text-slate-400 max-w-md leading-relaxed">Tajweed Ul Qur'an Academy provides high-quality Islamic and Academic education globally. A dedicated platform for ladies and kids.</p>
             </div>
             <div>
@@ -288,11 +292,12 @@
         </div>
     </footer>
 
-    <!-- LOGIC SCRIPTS -->
+    <!-- Firebase & Application Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, setDoc, doc, getDoc, getDocs, updateDoc, increment, query, orderBy, limit, onSnapshot, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // Firebase Configuration (Standard Placeholder)
         const firebaseConfig = {
             apiKey: "AIzaSyAs-SimulatedKey-For-Demonstration",
             authDomain: "salahtrack-academy.firebaseapp.com",
@@ -345,6 +350,7 @@
             if(dateEl) dateEl.innerText = now.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric'});
         }
 
+        // Logic for user registration
         const regForm = document.getElementById('registration-form');
         if(regForm) {
             regForm.addEventListener('submit', async (e) => {
@@ -368,7 +374,7 @@
                     localStorage.setItem('active_student_id', studentId);
                     appData.user = userData; appData.activeStudentId = studentId;
                     showDashboard();
-                } catch (err) { alert("System Error. Try again later."); }
+                } catch (err) { alert("Registration issue. Please contact Admin."); }
                 finally { btn.disabled = false; btn.innerText = "Launch Dashboard"; }
             });
         }
@@ -376,7 +382,7 @@
         async function showDashboard() {
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
-            document.getElementById('user-location').innerText = `Region: ${appData.user.country}`;
+            document.getElementById('user-location').innerText = `Tracked Region: ${appData.user.country}`;
             await fetchPrayerTimes(); loadStudentProfiles(); loadLeaderboard();
         }
 
@@ -426,7 +432,7 @@
         window.logPrayer = async (name, status, scheduledTime) => {
             const now = new Date(); const [sH, sM] = scheduledTime.split(':');
             const pT = new Date(); pT.setHours(parseInt(sH), parseInt(sM), 0);
-            if (status === 'ontime' && now > new Date(pT.getTime() + 20 * 60000)) { alert("Reminder: Marked as LATE (Past 20 mins)."); status = 'late'; }
+            if (status === 'ontime' && now > new Date(pT.getTime() + 20 * 60000)) { alert("Reminder: Past 20 minutes from Athan. Marking as LATE."); status = 'late'; }
             const pts = status === 'ontime' ? 10 : (status === 'late' ? 5 : 0);
             await addBonusPoints(pts, `${name} (${status})`);
         };
@@ -486,23 +492,12 @@
             });
         }
 
+        // Logic for rendering static course information
         function renderCourses() {
             const courses = [
-                { 
-                    t: "Tajweed & Quran", 
-                    d: "Master Quranic pronunciation with professional experienced teacher.", 
-                    icon: "fa-book-quran" 
-                },
-                { 
-                    t: "Islamic Studies", 
-                    d: "Deep dive into Hadeeth, Fiqh, and Islamic History for all age groups.", 
-                    icon: "fa-kaaba" 
-                },
-                { 
-                    t: "Academic Tuition", 
-                    d: "Comprehensive school support in a healthy Islamic environment for all subjects.", 
-                    icon: "fa-graduation-cap" 
-                }
+                { t: "Tajweed & Quran", d: "Master Quranic pronunciation with professional experienced teacher.", icon: "fa-book-quran" },
+                { t: "Islamic Studies", d: "Deep dive into Hadeeth, Fiqh, and Islamic History for all age groups.", icon: "fa-kaaba" },
+                { t: "Academic Tuition", d: "Comprehensive school support in a healthy Islamic environment for all subjects.", icon: "fa-graduation-cap" }
             ];
             const cont = document.getElementById('courses').querySelector('.grid');
             if(!cont) return; cont.innerHTML = '';
@@ -521,7 +516,7 @@
             });
         }
 
-        init();
+        window.onload = init;
     </script>
 </body>
 </html>
