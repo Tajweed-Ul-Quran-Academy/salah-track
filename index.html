@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SalahTrack | Tajweedul Quran Academy</title>
+    <title>SalahTrack | Tajweed Ul Qur'an Academy</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
@@ -62,15 +63,16 @@
         }
         .salah-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-        .methodology-badge {
-            background: linear-gradient(90deg, #1a365d, #2d3748);
-            color: #fbbf24;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: inline-block;
-            border: 1px solid var(--accent-gold);
+        /* Subtle Professional Methodology Styling */
+        .methodology-subtitle {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #4b5563;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         input, select {
@@ -114,17 +116,21 @@
     <!-- Top Announcement Bar -->
     <div class="ticker-container fixed top-0 w-full z-[100]">
         <div class="ticker-text text-sm md:text-base">
-            Online and offline classes all over the world | Enroll now for a better learning environment | صَلاَتِي حَيَاتِي - My Prayer is My Life | Register at Tajweedul Quran Academy Today!
+            Online and offline classes all over the world | Enroll now for a better learning environment | صَلاَتِي حَيَاتِي - My Prayer is My Life | Register at Tajweed Ul Qur'an Academy Today!
         </div>
     </div>
 
     <!-- Navigation -->
     <nav class="mt-11 bg-white shadow-lg px-6 py-4 flex justify-between items-center sticky top-11 z-50 border-b-2 border-amber-500">
         <div class="flex items-center gap-4">
-            <img src="https://i.postimg.cc/q7VyHnZg/logo.png" alt="Tajweedul Quran Academy Logo" style="max-height: 80px; width: auto; object-fit: contain;">
+            <img src="https://i.postimg.cc/q7VyHnZg/logo.png" alt="Tajweed Ul Qur'an Academy Logo" style="max-height: 80px; width: auto; object-fit: contain;">
             <div>
-                <h1 class="font-bold text-slate-900 text-lg md:text-2xl tracking-tight leading-none uppercase">TAJWEEDUL QURAN ACADEMY</h1>
-                <div class="methodology-badge mt-1">Following Ahlu Sunnah Wal Jama'ah Methodology</div>
+                <!-- Brand Heading Update -->
+                <h1 class="font-bold text-slate-900 text-lg md:text-2xl tracking-tight leading-none uppercase">TAJWEED UL QUR'AN ACADEMY</h1>
+                <!-- Professional Methodology Styling Update -->
+                <div class="methodology-subtitle">
+                    <i class="fas fa-circle-check" style="color: #d97706; font-size: 10px;"></i> Guided by Ahlu Sunnah Wal Jama'ah Methodology
+                </div>
             </div>
         </div>
         <div class="flex items-center gap-6">
@@ -138,12 +144,12 @@
 
     <main class="container mx-auto px-4 py-8 max-w-6xl">
 
-        <!-- HERO / ONBOARDING -->
+        <!-- ONBOARDING SECTION -->
         <section id="auth-section" class="max-w-xl mx-auto py-6">
             <div class="glass-card p-8 text-center mb-8 border-b-4 border-amber-500">
                 <h2 class="arabic-font text-5xl text-slate-900 mb-2">مرحبا</h2>
                 <h3 class="text-2xl font-bold text-slate-800">Welcome to SalahTrack</h3>
-                <p class="text-amber-700 font-semibold mt-2">A platform for ladies and kids to understand the Qur'an and Sunnah</p>
+                <p class="text-amber-700 font-semibold mt-2 text-sm">A platform for ladies and kids to understand the Qur'an and Sunnah</p>
             </div>
 
             <form id="registration-form" class="glass-card p-8 space-y-4">
@@ -154,7 +160,6 @@
                 </div>
                 <select id="reg-country" class="w-full" required>
                     <option value="">Select Your Country</option>
-                    <!-- JavaScript will fill this -->
                 </select>
                 <input type="tel" id="reg-whatsapp" placeholder="WhatsApp Number (e.g. +973...)" class="w-full" required>
                 <input type="email" id="reg-email" placeholder="Email Address" class="w-full" required>
@@ -165,10 +170,8 @@
             </form>
         </section>
 
-        <!-- DASHBOARD SECTION -->
+        <!-- DASHBOARD SECTION (Initially Hidden) -->
         <section id="dashboard-section" class="hidden space-y-8">
-            
-            <!-- Dashboard Header & Live Stats -->
             <div class="glass-card p-6 flex flex-col md:flex-row justify-between items-center gap-6 border-l-8 border-amber-500">
                 <div>
                     <h2 class="arabic-font text-4xl text-slate-900">صَلاَتِي حَيَاتِي - SalahTrack</h2>
@@ -184,19 +187,16 @@
                         <p id="global-counter" class="text-3xl font-black text-slate-900">...</p>
                     </div>
                     <div class="text-center bg-amber-50 p-4 rounded-2xl shadow-inner border border-amber-200 min-w-[120px]">
-                        <p class="text-[10px] uppercase text-amber-600 font-black tracking-widest mb-1">Your Total Points</p>
+                        <p class="text-[10px] uppercase text-amber-600 font-black tracking-widest mb-1">Your Points</p>
                         <p id="total-points" class="text-3xl font-black text-amber-700">0</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Profile Switcher (Multiple Students) -->
-            <div id="sibling-bar" class="flex gap-3 overflow-x-auto py-2 scrollbar-hide">
-                <!-- Profile tabs injected via JS -->
-            </div>
+            <!-- Profile Switcher -->
+            <div id="sibling-bar" class="flex gap-3 overflow-x-auto py-2 scrollbar-hide"></div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Left Content: Tracker -->
                 <div class="lg:col-span-2 space-y-6">
                     <div class="glass-card p-6">
                         <div class="flex justify-between items-center mb-6">
@@ -205,39 +205,27 @@
                             </h3>
                             <span id="current-date" class="bg-slate-100 text-slate-800 px-4 py-1 rounded-full text-xs font-black"></span>
                         </div>
-                        <div id="prayer-list" class="space-y-4">
-                            <!-- Prayer cards injected by JS -->
-                        </div>
+                        <div id="prayer-list" class="space-y-4"></div>
                     </div>
-
-                    <!-- Sunnah Tracker Card -->
                     <div class="glass-card p-6 border-b-4 border-amber-400">
                         <h3 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                             <i class="fas fa-medal text-amber-500"></i> Sunnah Bonus Points
                         </h3>
-                        <div id="sunnah-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Sunnah items injected by JS -->
-                        </div>
+                        <div id="sunnah-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </div>
                 </div>
 
-                <!-- Sidebar Content -->
                 <div class="space-y-6">
-                    <!-- Leaderboard -->
                     <div class="glass-card p-6 border-t-8 border-slate-900">
                         <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
                             <i class="fas fa-crown text-amber-500"></i> Weekly Hall of Fame
                         </h3>
-                        <div id="leaderboard" class="space-y-4">
-                            <!-- Leaderboard ranks injected by JS -->
-                        </div>
+                        <div id="leaderboard" class="space-y-4"></div>
                     </div>
-
-                    <!-- Ad Banner -->
                     <div class="bg-slate-900 rounded-3xl p-6 text-white shadow-2xl relative overflow-hidden">
                         <div class="relative z-10">
                             <h4 class="text-lg font-bold text-amber-400 uppercase">Advance Your Learning</h4>
-                            <p class="text-slate-300 text-sm mb-4">Enroll in Specialized Quran & Arabic studies for all ages.</p>
+                            <p class="text-slate-300 text-sm mb-4">Enroll in Specialized Quran studies for all ages.</p>
                             <a href="https://wa.me/c/97339903645" target="_blank" class="gold-btn px-4 py-2 rounded-lg font-bold text-sm inline-block">WhatsApp Catalog</a>
                         </div>
                         <i class="fas fa-book-quran absolute -bottom-6 -right-6 text-8xl opacity-10 rotate-12"></i>
@@ -251,10 +239,9 @@
             <h2 class="text-3xl font-black text-center text-slate-900 mb-4 uppercase">Academic & Islamic Courses</h2>
             <div class="w-24 h-1 bg-amber-500 mx-auto mb-12"></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Course cards injected by JS -->
+                <!-- Course Cards will be rendered here via renderCourses() -->
             </div>
         </section>
-
     </main>
 
     <!-- Milestone Popup -->
@@ -273,7 +260,7 @@
         <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="col-span-1 md:col-span-2">
                 <img src="https://i.postimg.cc/q7VyHnZg/logo.png" alt="Logo" style="max-height: 80px; width: auto; object-fit: contain;" class="mb-6 brightness-0 invert">
-                <p class="text-slate-400 max-w-md leading-relaxed">Tajweedul Quran Academy provides high-quality Islamic and Academic education globally through online and offline platforms. A dedicated platform for ladies and kids.</p>
+                <p class="text-slate-400 max-w-md leading-relaxed">Tajweed Ul Qur'an Academy provides high-quality Islamic and Academic education globally. A dedicated platform for ladies and kids.</p>
             </div>
             <div>
                 <h5 class="font-bold text-lg text-amber-500 mb-6 uppercase tracking-widest">Connect With Us</h5>
@@ -297,16 +284,15 @@
             </div>
         </div>
         <div class="text-center mt-16 pt-8 border-t border-slate-800 text-xs text-slate-500">
-            &copy; 2024 Tajweedul Quran Academy. Following Ahlu Sunnah Wal Jama'ah Methodology.
+            &copy; 2024 Tajweed Ul Qur'an Academy. Guided by Ahlu Sunnah Wal Jama'ah Methodology.
         </div>
     </footer>
 
-    <!-- FIREBASE & LOGIC -->
+    <!-- LOGIC SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, setDoc, doc, getDoc, getDocs, updateDoc, increment, query, orderBy, limit, onSnapshot, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // FIREBASE INITIALIZATION
         const firebaseConfig = {
             apiKey: "AIzaSyAs-SimulatedKey-For-Demonstration",
             authDomain: "salahtrack-academy.firebaseapp.com",
@@ -319,7 +305,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // APP STATE
         let appData = {
             user: JSON.parse(localStorage.getItem('salah_user')) || null,
             activeStudentId: localStorage.getItem('active_student_id') || null,
@@ -337,7 +322,6 @@
                     countrySelect.appendChild(opt);
                 });
             }
-
             if (appData.user) { showDashboard(); }
             updateClock();
             setInterval(updateClock, 1000);
@@ -349,7 +333,7 @@
             try {
                 const q = query(collection(db, "users"));
                 const querySnapshot = await getDocs(q);
-                document.getElementById('global-counter').innerText = querySnapshot.size || "168";
+                document.getElementById('global-counter').innerText = querySnapshot.size || "184";
             } catch (e) { document.getElementById('global-counter').innerText = "150+"; }
         }
 
@@ -361,15 +345,12 @@
             if(dateEl) dateEl.innerText = now.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric'});
         }
 
-        // --- REGISTRATION LOGIC ---
         const regForm = document.getElementById('registration-form');
         if(regForm) {
             regForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const btn = e.target.querySelector('button');
-                btn.innerText = "Wait, Setting Up...";
-                btn.disabled = true;
-
+                btn.innerText = "Setting Up..."; btn.disabled = true;
                 const userData = {
                     name: document.getElementById('reg-name').value,
                     age: document.getElementById('reg-age').value,
@@ -378,44 +359,25 @@
                     email: document.getElementById('reg-email').value,
                     joinedAt: new Date().toISOString()
                 };
-
                 try {
                     const userRef = doc(db, "users", userData.email);
                     await setDoc(userRef, userData);
-
                     const studentId = `std_${Date.now()}`;
-                    await setDoc(doc(db, "students", studentId), {
-                        id: studentId,
-                        parentEmail: userData.email,
-                        name: userData.name,
-                        points: 0,
-                        milestoneAlerted: false
-                    });
-
+                    await setDoc(doc(db, "students", studentId), { id: studentId, parentEmail: userData.email, name: userData.name, points: 0, milestoneAlerted: false });
                     localStorage.setItem('salah_user', JSON.stringify(userData));
                     localStorage.setItem('active_student_id', studentId);
-                    appData.user = userData;
-                    appData.activeStudentId = studentId;
-
+                    appData.user = userData; appData.activeStudentId = studentId;
                     showDashboard();
-                } catch (err) {
-                    alert("Registration failed. Please contact Academy Admin.");
-                } finally {
-                    btn.disabled = false;
-                    btn.innerText = "Launch Dashboard";
-                }
+                } catch (err) { alert("System Error. Try again later."); }
+                finally { btn.disabled = false; btn.innerText = "Launch Dashboard"; }
             });
         }
 
-        // --- DASHBOARD LOGIC ---
         async function showDashboard() {
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
-            document.getElementById('user-location').innerText = `Tracked Country: ${appData.user.country}`;
-            
-            await fetchPrayerTimes();
-            loadStudentProfiles();
-            loadLeaderboard();
+            document.getElementById('user-location').innerText = `Region: ${appData.user.country}`;
+            await fetchPrayerTimes(); loadStudentProfiles(); loadLeaderboard();
         }
 
         async function fetchPrayerTimes() {
@@ -428,67 +390,43 @@
         }
 
         function renderPrayerGrid() {
-            const list = document.getElementById('prayer-list');
-            if(!list) return;
+            const list = document.getElementById('prayer-list'); if(!list) return;
             list.innerHTML = '';
-            
-            const prayers = [
-                { id: 'Fajr', ar: 'الفجر' },
-                { id: 'Dhuhr', ar: 'الظهر' },
-                { id: 'Asr', ar: 'العصر' },
-                { id: 'Maghrib', ar: 'المغرب' },
-                { id: 'Isha', ar: 'العشاء' }
-            ];
-
+            const prayers = [{id:'Fajr', ar:'الفجر'}, {id:'Dhuhr', ar:'الظهر'}, {id:'Asr', ar:'العصر'}, {id:'Maghrib', ar:'المغرب'}, {id:'Isha', ar:'العشاء'}];
             prayers.forEach(p => {
                 const time = appData.prayerTimes[p.id];
                 const row = document.createElement('div');
-                row.className = "flex flex-col md:flex-row items-center justify-between p-4 bg-white rounded-xl border border-slate-100 gap-4 hover:border-amber-400 transition shadow-sm";
+                row.className = "flex flex-col md:flex-row items-center justify-between p-4 bg-white rounded-xl border border-slate-100 gap-4 shadow-sm hover:border-amber-400 transition";
                 row.innerHTML = `
                     <div class="flex items-center gap-4 w-full md:w-1/3">
-                        <div class="w-12 h-12 bg-slate-900 text-amber-400 rounded-xl flex items-center justify-center font-black">
-                            ${p.id[0]}
-                        </div>
-                        <div>
-                            <p class="font-black text-slate-800 text-lg uppercase">${p.id} <span class="arabic-font text-amber-600 ml-2 font-normal lowercase">${p.ar}</span></p>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Athan @ ${time}</p>
-                        </div>
+                        <div class="w-12 h-12 bg-slate-900 text-amber-400 rounded-xl flex items-center justify-center font-black">${p.id[0]}</div>
+                        <div><p class="font-black text-slate-800 uppercase">${p.id} <span class="arabic-font text-amber-600 ml-2 font-normal lowercase">${p.ar}</span></p><p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Time: ${time}</p></div>
                     </div>
                     <div class="flex gap-2 w-full md:w-auto">
                         <button onclick="logPrayer('${p.id}', 'ontime', '${time}')" class="salah-btn flex-1 bg-amber-500 text-white px-4 py-2 rounded-lg text-xs font-black">ON TIME</button>
                         <button onclick="logPrayer('${p.id}', 'late', '${time}')" class="salah-btn flex-1 bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-black">LATE</button>
-                    </div>
-                `;
+                    </div>`;
                 list.appendChild(row);
             });
-
             renderSunnahGrid();
         }
 
         function renderSunnahGrid() {
-            const list = document.getElementById('sunnah-list');
-            if(!list) return;
+            const list = document.getElementById('sunnah-list'); if(!list) return;
             list.innerHTML = '';
             const sunnahs = ["2 Before Fajr", "4 Before Dhuhr", "2 After Dhuhr", "4 Before Asr", "2 After Maghrib", "2 After Isha"];
             sunnahs.forEach(s => {
                 const item = document.createElement('div');
-                item.className = "bg-slate-50 p-4 rounded-xl flex justify-between items-center border border-slate-100 hover:shadow-md transition";
+                item.className = "bg-slate-50 p-4 rounded-xl flex justify-between items-center border border-slate-100";
                 item.innerHTML = `<span class="text-sm font-bold text-slate-700 uppercase tracking-tight">${s}</span><button onclick="addBonusPoints(5, '${s}')" class="bg-amber-100 text-amber-700 px-3 py-1 rounded-lg text-xs font-black">+5 PTS</button>`;
                 list.appendChild(item);
             });
         }
 
-        // --- TRACKING CORE ---
         window.logPrayer = async (name, status, scheduledTime) => {
-            const now = new Date();
-            const [sHour, sMin] = scheduledTime.split(':');
-            const pTime = new Date(); pTime.setHours(parseInt(sHour), parseInt(sMin), 0);
-
-            if (status === 'ontime' && now > new Date(pTime.getTime() + 20 * 60000)) {
-                alert("Reminder: It has been more than 20 mins since Athan. Marking as LATE.");
-                status = 'late';
-            }
-
+            const now = new Date(); const [sH, sM] = scheduledTime.split(':');
+            const pT = new Date(); pT.setHours(parseInt(sH), parseInt(sM), 0);
+            if (status === 'ontime' && now > new Date(pT.getTime() + 20 * 60000)) { alert("Reminder: Marked as LATE (Past 20 mins)."); status = 'late'; }
             const pts = status === 'ontime' ? 10 : (status === 'late' ? 5 : 0);
             await addBonusPoints(pts, `${name} (${status})`);
         };
@@ -498,54 +436,39 @@
             const ref = doc(db, "students", appData.activeStudentId);
             try {
                 await updateDoc(ref, { points: increment(pts) });
-                const snap = await getDoc(ref);
-                const curPts = snap.data().points;
+                const snap = await getDoc(ref); const curPts = snap.data().points;
                 document.getElementById('total-points').innerText = curPts;
-
                 if (curPts >= 500 && !snap.data().milestoneAlerted) { triggerMilestone(snap.data()); }
-                alert(`SubhanAllah! ${pts} Points awarded for ${label}!`);
+                alert(`${pts} Points awarded for ${label}!`);
             } catch (e) { console.error(e); }
         };
 
         async function triggerMilestone(studentData) {
             document.getElementById('milestone-modal').classList.remove('hidden');
             await updateDoc(doc(db, "students", studentData.id), { milestoneAlerted: true });
-            const msg = `MILESTONE REACHED! ${studentData.name} (${appData.user.email}) has reached 500 Points on SalahTrack!`;
+            const msg = `Milestone: ${studentData.name} has reached 500 points on SalahTrack!`;
             window.open(`https://wa.me/97339903645?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         window.closeMilestone = () => document.getElementById('milestone-modal').classList.add('hidden');
 
-        // --- SIBLING SWITCHER ---
         async function loadStudentProfiles() {
             const q = query(collection(db, "students"), where("parentEmail", "==", appData.user.email));
-            const querySnapshot = await getDocs(q);
-            const container = document.getElementById('sibling-bar');
-            if(!container) return;
-            container.innerHTML = '';
-            
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const btn = document.createElement('button');
-                const isActive = appData.activeStudentId === data.id;
-                btn.className = `px-6 py-2 rounded-xl whitespace-nowrap transition-all font-black uppercase text-xs tracking-widest ${isActive ? 'bg-slate-900 text-amber-400 shadow-xl scale-105 border-2 border-amber-500' : 'bg-white text-slate-500 border border-slate-100'}`;
-                btn.innerText = data.name;
-                btn.onclick = () => { localStorage.setItem('active_student_id', data.id); appData.activeStudentId = data.id; loadStudentProfiles(); };
+            const snap = await getDocs(q); const container = document.getElementById('sibling-bar'); if(!container) return; container.innerHTML = '';
+            snap.forEach((doc) => {
+                const data = doc.data(); const btn = document.createElement('button'); const isActive = appData.activeStudentId === data.id;
+                btn.className = `px-6 py-2 rounded-xl whitespace-nowrap transition-all font-black uppercase text-xs tracking-widest ${isActive ? 'bg-slate-900 text-amber-400 shadow-xl scale-105 border-2 border-amber-500' : 'bg-white text-slate-500 border'}`;
+                btn.innerText = data.name; btn.onclick = () => { localStorage.setItem('active_student_id', data.id); appData.activeStudentId = data.id; loadStudentProfiles(); };
                 container.appendChild(btn);
             });
-
-            const addBtn = document.createElement('button');
-            addBtn.className = "px-6 py-2 rounded-xl border-2 border-dashed border-amber-300 text-amber-600 font-bold bg-white/50 text-xs uppercase tracking-widest";
-            addBtn.innerText = "+ Add Child Profile";
+            const addBtn = document.createElement('button'); addBtn.className = "px-6 py-2 rounded-xl border-2 border-dashed border-amber-300 text-amber-600 font-bold bg-white/50 text-xs uppercase";
+            addBtn.innerText = "+ Add Profile";
             addBtn.onclick = async () => {
-                const n = prompt("Enter Student Name:");
-                if(!n) return;
-                const sid = `std_${Date.now()}`;
-                await setDoc(doc(db, "students", sid), { id: sid, parentEmail: appData.user.email, name: n, points: 0, milestoneAlerted: false });
+                const n = prompt("Name:"); if(!n) return;
+                const sid = `std_${Date.now()}`; await setDoc(doc(db, "students", sid), { id:sid, parentEmail:appData.user.email, name:n, points:0, milestoneAlerted:false });
                 localStorage.setItem('active_student_id', sid); appData.activeStudentId = sid; loadStudentProfiles();
             };
             container.appendChild(addBtn);
-
             const activeDoc = await getDoc(doc(db, "students", appData.activeStudentId));
             if(activeDoc.exists()) document.getElementById('total-points').innerText = activeDoc.data().points;
         }
@@ -553,26 +476,22 @@
         async function loadLeaderboard() {
             const q = query(collection(db, "students"), orderBy("points", "desc"), limit(3));
             onSnapshot(q, (snap) => {
-                const list = document.getElementById('leaderboard');
-                if(!list) return; list.innerHTML = '';
-                let r = 1;
+                const list = document.getElementById('leaderboard'); if(!list) return; list.innerHTML = ''; let r = 1;
                 snap.forEach(d => {
                     const data = d.data();
-                    list.innerHTML += `<div class="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border border-slate-100">
-                        <div class="flex items-center gap-4"><span class="w-8 h-8 rounded-lg flex items-center justify-center font-black ${r===1?'bg-amber-400 text-amber-900':'bg-slate-100 text-slate-500'}">${r}</span><span class="font-bold text-slate-700">${data.name}</span></div>
-                        <span class="font-black text-slate-900">${data.points} PTS</span>
-                    </div>`; r++;
+                    list.innerHTML += `<div class="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border">
+                        <div class="flex items-center gap-4"><span class="w-8 h-8 rounded-lg flex items-center justify-center font-black ${r===1?'bg-amber-400 text-amber-900':'bg-slate-100'}">${r}</span><span class="font-bold text-slate-700">${data.name}</span></div>
+                        <span class="font-black text-slate-900">${data.points} PTS</span></div>`; r++;
                 });
             });
         }
 
-        // --- COURSE RENDER (WITH SPECIFIC UPDATES) ---
         function renderCourses() {
             const courses = [
                 { 
                     t: "Tajweed & Quran", 
-                    d: "Master Quranic pronunciation with professional experienced teacher. Online/Offline classes with certified Egyptian & Indian scholars.", 
-                    icon: "fa-book-open" 
+                    d: "Master Quranic pronunciation with professional experienced teacher.", 
+                    icon: "fa-book-quran" 
                 },
                 { 
                     t: "Islamic Studies", 
@@ -586,18 +505,17 @@
                 }
             ];
             const cont = document.getElementById('courses').querySelector('.grid');
-            if(!cont) return;
-            cont.innerHTML = '';
+            if(!cont) return; cont.innerHTML = '';
             courses.forEach(c => {
                 cont.innerHTML += `
                 <div class="glass-card overflow-hidden hover:shadow-2xl transition-all border-b-8 border-amber-500 flex flex-col h-full">
                     <div class="h-40 bg-slate-900 flex items-center justify-center text-5xl">
                         <i class="fas ${c.icon}" style="color: #d97706;"></i>
                     </div>
-                    <div class="p-8 flex flex-col flex-grow">
+                    <div class="p-8 flex flex-col flex-grow text-center">
                         <h4 class="font-black text-xl mb-2 text-slate-900 uppercase tracking-tight">${c.t}</h4>
-                        <p class="text-slate-500 text-sm mb-6 flex-grow">${c.d}</p>
-                        <a href="https://wa.me/c/97339903645" target="_blank" class="block text-center primary-btn py-3 rounded-xl font-black shadow-lg">REGISTER NOW</a>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">${c.d}</p>
+                        <a href="https://wa.me/c/97339903645" target="_blank" class="block text-center primary-btn py-3 rounded-xl font-black shadow-lg uppercase tracking-widest text-xs">Register Now</a>
                     </div>
                 </div>`;
             });
